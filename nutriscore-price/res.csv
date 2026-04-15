@@ -1,0 +1,94 @@
+StudyCategory,Subcategory,category,a_obs,a_price,b_obs,b_price,c_obs,c_price,d_obs,d_price,e_obs,e_price,other_obs,other_price
+Pains industriels,Tous les pains industriels,en:breads,413,6.6823525,357,4.38,1516,5.3,426,7.97684,173,2.7,35,4.36
+Pains industriels,Baguettes,en:baguettes,,,,,32,4.8,,,94,1.4,23,4.36
+Pains industriels,Biscottes,en:rusks,81,7.7,,,164,8.535715,89,6.3333335,,,,
+Pains industriels,Pains de mie,en:sliced-breads,116,4.123171,232,3.0821917,679,3.0,,,,,,
+Pains industriels,Pains spéciaux,en:special-breads,17,7.08,26,6.6969695,203,6.361111,43,7.5087724,,,,
+Céréales pour petit déjeuner,Toutes les céréales,en:breakfast-cereals,434,6.6266665,163,9.155556,624,7.7666664,378,7.275555,117,7.14,25,3.9
+Céréales pour petit déjeuner,Céréales avec chocolat,en:chocolate-cereals,48,9.946667,61,9.111111,306,7.872222,236,7.7207794,109,7.112903,,
+Céréales pour petit déjeuner,Pétales,en:cereal-flakes,145,4.3454547,13,7.4133334,37,5.76,29,5.6290326,,,15,3.5
+Céréales pour petit déjeuner,Mueslis,en:mueslis,242,7.0,78,9.125556,220,8.6,77,7.706667,,,,
+Céréales pour petit déjeuner,Céréales fourrées,en:filled-cereals,,,,,14,16.699999,106,7.6173778,60,7.7903223,,
+Céréales pour petit déjeuner,Céréales avec du miel,en:cereals-with-honey,,,,,34,7.424243,,,,,,
+Viennoiseries,Toutes viennoiseries,en:viennoiseries,12,6.8041234,11,5.6666665,181,5.8571424,728,5.9700894,339,9.333333,,
+Viennoiseries,Brioches et gâches,en:brioches,,,,,103,6.6222224,491,5.98,223,10.133333,,
+Gâteaux et biscuits,Gâteaux et biscuits sucrés,en:sweet-snacks,235,12.200001,323,27.8,891,11.56,4015,10.687831,15556,14.899999,299,32.857143
+Laits et boissons lactées,Tous les laits,en:milks,,,1215,1.44,221,1.9700001,,,84,5.88,85,6.766667
+Laits et boissons lactées,Laits fermentés,en:fermented-milk-drinks,,,45,4.9,78,6.333333,183,2.9499998,103,4.6,28,7.5369563
+Laits et boissons lactées,Laits aromatisés,en:flavoured-milks,,,,,61,2.375,70,4.225,,,12,5.4900002
+Laits et boissons lactées,Laits sans lactose,en:lactose-free-milk,,,92,2.3816667,,,,,,,,
+Laits et boissons lactées,Autres laits (animal),en:cow-milks,,,167,1.78,33,1.3700001,,,,,,
+Laits et boissons lactées,Alternatives végétales,en:milk-substitutes,,,677,1.77,504,2.295,291,2.59,385,4.85,,
+Eaux aromatisées,Toutes les eaux arom.,en:flavored-waters,,,140,0.886,77,1.34,22,0.82,13,6.0937505,59,1.7878788
+Boissons gazeuses,Boissons gazeuses / thé,en:carbonated-drinks,763,0.85333335,184,1.09,581,1.7272727,425,1.9090909,683,2.0833335,267,1.8030303
+Jus,Tous les jus,en:juices-and-nectars,,,298,3.85,1170,2.55,313,3.0,330,2.8916667,86,2.7966666
+Jus,Boissons à base de jus,en:fruit-juices-from-concentrate,,,,,89,1.93,28,1.845,22,1.705,,
+Jus,Jus de légumes,en:vegetable-juices,,,92,3.32,,,,,,,,
+Jus,Nectars,en:fruit-nectars,,,,,51,2.39,47,2.2399998,135,2.7,15,2.4083333
+Jus,Purs jus / autres,en:fruit-juices,,,210,4.715,1131,2.56,291,3.0416667,204,3.0777776,68,2.8549998
+Jus,Smoothies,en:smoothies,,,,,15,5.1466665,18,6.0533333,20,5.0733333,,
+Pommes de terre,Produits surgelés,en:frozen-potatoes,,,41,3.653846,30,4.9833336,,,,,,
+Légumes surgelés,Légumes transformés,en:frozen-vegetables,560,2.515,95,4.6933336,46,7.654166,,,,,37,1.988889
+Sauces,Sauces liquides recettes,en:sauces,662,4.7625,288,9.703947,964,9.267125,1195,7.089286,1552,11.076315,133,7.742857
+Sauces,Toutes sauces pâtes,en:pasta-sauces,127,5.6,62,7.285714,65,8.72,77,9.324325,104,12.289474,,
+Sauces,Sauces pesto,en:pestos,,,,,23,18.928572,103,12.432432,221,13.684211,,
+Sauces,Sauces à base de viande,en:meat-based-sauces,32,7.7625003,31,6.775,42,7.996491,,,,,,
+Sauces,Autres sauces basiques,en:tomato-sauces,478,4.5,100,7.5249996,219,8.25,176,4.806977,,,,
+Pizzas,Toutes les pizzas,en:pizzas,,,12,6.366197,432,7.914644,394,8.222222,,,,
+Pizzas,Pizzas au fromage,en:cheese-pizzas,,,,,48,7.909091,199,7.982759,,,,
+Pizzas,Pizzas au poisson,en:tuna-pizzas,,,,,36,7.5070424,,,,,,
+Pizzas,Pizzas à base de viande,en:ham-pizzas,,,,,40,9.159091,15,10.903226,,,,
+Pizzas,Pizzas végétariennes,en:vegetarian-pizzas,,,,,130,7.909091,211,8.378378,,,,
+Salades préparées,Toutes les salades,en:prepared-salads,136,7.756666,150,10.625,509,10.166666,43,11.76,,,,
+Salades préparées,Prêtes à manger,en:prepared-salads,136,7.756666,150,10.625,509,10.166666,43,11.76,,,,
+Salades préparées,Taboulés,en:tabbouleh,41,9.52,41,6.833333,245,6.3,,,,,,
+Viandes transformées,Toutes viandes transf.,en:prepared-meats,98,16.61111,193,17.38889,558,18.880953,914,12.891667,2200,15.143181,68,18.064104
+Viandes transformées,Charcuterie tranchée,fr:charcuteries-diverses,13,2.18,,,12,15.49641,271,12.799999,382,10.8,14,12.755556
+Viandes transformées,Jambon Blanc,en:white-hams,,,,,425,20.619047,127,15.156249,32,15.703704,,
+Viandes transformées,Lardons,en:lardons,,,,,,,68,12.733333,173,10.650001,,
+Viandes transformées,Produits panés,en:breaded-chicken,13,15.0,43,11.95,63,10.95,24,9.975,,,,
+Viandes transformées,Saucisses,en:sausages,,,,,20,15.316667,139,10.809524,399,11.617647,,
+Viandes transformées,Terrines,en:meat-spreads,,,,,,,,,12,13.833334,,
+Poissons transf.,Tous poissons transf.,en:fishes,900,16.079302,614,16.94591,364,11.656805,434,27.331419,141,19.857143,54,22.349998
+Poissons transf.,Conserves (autres),en:canned-fishes,523,16.142857,400,20.57143,174,13.076923,117,22.159092,20,18.488684,34,22.9375
+Poissons transf.,Maquereaux,en:mackerels,16,16.535986,55,14.6285715,108,12.433432,44,17.23611,,,,
+Poissons transf.,Poissons panés,en:breaded-fish,117,12.45,109,10.247252,42,9.916667,,,,,,
+Poissons transf.,Rillettes,en:fish-rillettes,25,19.5,83,16.16,25,20.347826,35,35.454544,,,,
+Poissons transf.,Sardines,en:sardines,75,15.357143,218,22.962961,44,17.565434,23,26.086956,11,15.1851845,,
+Poissons transf.,Saumons fumés,en:smoked-salmons,,,,,,,94,54.958336,18,40.821873,,
+Poissons transf.,Thons,en:tunas,458,16.037634,188,17.296251,52,10.555555,44,29.118055,,,32,19.6875
+Plats préparés,Tous plats préparés,en:meals,1592,6.5584807,2304,8.426667,5621,9.270833,1638,11.265,168,13.479167,67,8.475
+Plats préparés,Hamburgers,en:hamburgers,,,,,33,19.23077,87,18.645163,,,,
+Plats préparés,Cassoulets,en:cassoulets,24,5.8333335,28,6.5476193,95,6.0,,,,,,
+Plats préparés,Chilis,en:chili-con-carne,45,6.0624995,40,12.066666,,,,,,,,
+Plats préparés,Choucroutes,en:sauerkrauts,,,27,6.2374997,60,5.073077,,,,,,
+Plats préparés,Plats trad. viande,en:meals-with-meat,193,9.380953,562,10.327381,1699,9.964286,287,10.666667,43,15.416667,33,12.966667
+Plats préparés,Couscous,en:couscous,97,3.66,40,11.633334,17,11.333333,,,,,,
+Plats préparés,Snacking,en:salty-snacks,446,6.703704,141,12.204082,1332,13.163334,2486,11.900001,673,13.571428,34,15.875001
+Plats préparés,Gratins,en:gratins,,,,,203,9.675,15,14.84375,,,,
+Plats préparés,Paëllas,en:paella,,,44,7.4937496,27,7.1249995,,,,,,
+Plats préparés,Parmentiers,en:beef-cottage-pies,,,,,125,9.166666,,,,,,
+"Plats préparés,Riz", pâtes ou blé,en:rice-dishes,25,12.923077,232,10.427272,392,11.3,,,,,,
+Plats préparés,Lentilles saucisses,en:lentil-dishes,32,8.016667,26,7.2095237,129,5.947368,,,,,,
+Plats préparés,Purées,en:purees,110,3.7756412,28,6.86,72,7.688889,,,,,27,7.269231
+Plats préparés,Quenelles,en:plain-quenelles,,,,,64,5.8166666,27,13.3,,,,
+Plats préparés,Plats poisson,en:meals-with-fish,79,11.75,257,11.78125,426,11.475,64,13.333334,,,20,16.34729
+Plats préparés,Tartes feuilletés,en:sweet-pies,,,,,36,16.142857,143,14.8,296,11.048388,,
+Plats préparés,Plats végétariens,en:plant-based-meals,214,9.086667,180,10.12,151,8.636364,22,7.6744184,,,,
+Soupes,Toutes les soupes,en:soups,109,3.74,348,3.75,494,4.7816668,,,,,120,19.172318
+Soupes,Gazpachos,en:gazpacho,58,3.765,,,,,,,,,,
+Soupes,Soupes poisson/viande,en:fish-soups,,,20,5.1354084,11,5.853333,,,,,,
+Soupes,Soupes de légumes,en:vegetable-soups,102,3.695,291,3.4999998,382,4.0849996,,,,,41,27.179487
+Yaourts,Tous les yaourts,en:yogurts,219,4.8749995,402,3.845,1372,4.145,190,2.9750001,95,4.6,52,7.28
+Yaourts,Yaourts aromatisés,en:fruit-yogurts,33,5.6666665,123,4.2250004,721,4.26,11,3.0092592,14,5.075926,,
+Yaourts,Fromages blancs,en:fermented-dairy-desserts,702,3.3931818,719,3.6250002,1847,3.9864862,219,3.0462964,101,4.6,58,7.517512
+Yaourts,Yaourts à la grecque,en:greek-style-yogurts,,,,,209,3.4,,,,,15,5.86
+Yaourts,Alternatives végétales,en:non-dairy-yogurts,187,4.0,260,4.2125,164,4.75,,,,,,
+Yaourts,Autres laits (non-vache),en:sheep-milk-yogurts,,,,,52,7.0652175,,,,,,
+Yaourts,Yaourts nature,en:plain-yogurts,92,2.055,165,2.82,211,2.82,,,,,,
+Yaourts,Yaourts à la vanille,en:vanilla-yogurt,,,26,4.08,118,4.385,,,,,,
+Yaourts,Yaourts sucrés,en:plain-yogurt-with-sugar,,,,,26,2.65,,,,,,
+Yaourts à boire,Tous yaourts à boire,en:yogurt-drinks,,,12,4.24375,29,7.4666667,149,2.93,59,4.6875,12,7.9666667
+Yaourts à boire,Aromatisés/fruits,en:flavoured-yogurt-drinks,,,,,,,78,2.9444447,,,,
+Yaourts à boire,Nature et sucrés,en:yogurt-drinks-with-sugar,,,,,,,15,2.66,,,,
+Fromages,Fromages,en:cheeses,324,2.0555556,153,3.5,1265,8.849999,3358,13.450001,449,13.513514,81,13.2
