@@ -74,6 +74,21 @@ Nb of products last edited during the challenge : 2571
 select count(*) from 'scantober_food.parquet' where last_modified_t > 1790812800;
 ```
 
+### Compared to last month 
+
+Nb of products with same categories created during the previous month : 89
+
+```sql
+select count(*) from 'scantober_food.parquet' where created_t < 1790812800 and created_t > 1788220800;
+```
+
+Nb of products with same categories last edited during the previous month : 1731
+
+```sql
+select count(*) from 'scantober_food.parquet' where last_modified_t < 1790812800 and last_modified_t > 1788220800;
+```
+
+**-> Increase is significat enough to attribute it to communication efforts**
 
 ### Creation : Product, cat, creation day, creator
 
