@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Scantober 2026 · Open Food Facts</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,500;0,800;1,800&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --bg: #F5F5F5;
+            --ink: #000;
+            --card: #fff;
+            --or: #FF8714;
+            --tu: #008C8C;
+            --pk: #FF6E78;
+            --bl: #0064C8;
+            --cream: #FFF1E4;
+            box-sizing: border-box;
+            padding-top: env(safe-area-inset-top, 0px);
+            padding-bottom: env(safe-area-inset-bottom, 0px)
+        }
+
+        @media (prefers-color-scheme:dark) {
+            :root:not([data-theme=light]) {
+                --bg: #000;
+                --ink: #fff;
+                --card: #161616;
+                --cream: #1d1a17
+            }
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        html {
+            scroll-padding-top: env(safe-area-inset-top, 0px)
+        }
+
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--ink);
+            font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+            line-height: 1.5
+        }
+
+        .wrap {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 18px
+        }
+
+        .tag {
+            display: inline-block;
+            color: #fff;
+            font-weight: 800;
+            border-radius: 14px;
+            padding: .08em .4em;
+            transform: rotate(-5deg);
+            background: var(--or)
+        }
+
+        .tag.t {
+            background: var(--tu)
+        }
+
+        .tag.p {
+            background: var(--pk)
+        }
+
+        .tag.b {
+            background: var(--bl)
+        }
+
+        header {
+            background: var(--or);
+            color: #fff;
+            padding: 56px 0 64px;
+            overflow: hidden
+        }
+
+        h1 {
+            font-size: clamp(46px, 11vw, 128px);
+            line-height: 1;
+            margin: 0 0 18px;
+            font-weight: 800;
+            letter-spacing: -.03em
+        }
+
+        h1 .tag {
+            background: #fff;
+            color: var(--or)
+        }
+
+        .logo {
+            display: inline-block;
+            background: #fff;
+            border-radius: 18px;
+            padding: 10px 16px;
+            margin-bottom: 22px;
+            transform: rotate(-2deg)
+        }
+
+        .logo-img {
+            height: 38px;
+            display: block
+        }
+
+        header p {
+            max-width: 520px;
+            font-size: 19px;
+            margin: 0
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 18px;
+            margin: -34px 0 0
+        }
+
+        .stat {
+            background: var(--card);
+            border-radius: 22px;
+            padding: 18px 20px;
+            box-shadow: 0 6px 0 var(--c)
+        }
+
+        .stat b {
+            font-size: 46px;
+            line-height: 1;
+            font-weight: 800;
+            color: var(--c);
+            display: block
+        }
+
+        .stat span {
+            font-size: 14px
+        }
+
+        h2 {
+            font-size: clamp(28px, 5vw, 44px);
+            margin: 64px 0 8px;
+            font-weight: 800;
+            letter-spacing: -.02em
+        }
+
+        .sub {
+            margin: 0 0 22px;
+            max-width: 620px;
+            font-weight: 300;
+            font-size: 17px
+        }
+
+        .legend {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            margin-bottom: 14px
+        }
+
+        .legend i {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 6px;
+            vertical-align: -1px
+        }
+
+        .cal {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px
+        }
+
+        .dow {
+            font-size: 12px;
+            font-weight: 800;
+            text-align: center;
+            opacity: .6
+        }
+
+        .day {
+            position: relative;
+            min-height: 112px;
+            border: 0;
+            border-radius: 16px;
+            background: var(--card);
+            padding: 8px;
+            text-align: left;
+            font: inherit;
+            color: inherit;
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between
+        }
+
+        .day .fill {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--c);
+            opacity: .28;
+            height: var(--h);
+            transition: height .5s
+        }
+
+        .day>* {
+            position: relative
+        }
+
+        .day .n {
+            font-weight: 800;
+            font-size: 20px;
+            line-height: 1
+        }
+
+        .day .cat {
+            font-size: 11.5px;
+            font-weight: 800;
+            line-height: 1.15;
+            color: #fff;
+            background: var(--c);
+            border-radius: 8px;
+            padding: 3px 6px;
+            transform: rotate(-3deg);
+            align-self: flex-start;
+            word-break: break-word
+        }
+
+        .day .dots {
+            display: flex;
+            gap: 3px;
+            flex-wrap: wrap;
+            min-height: 10px
+        }
+
+        .dots i {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--ink)
+        }
+
+        .day[aria-pressed=true] {
+            outline: 4px solid var(--ink)
+        }
+
+        .day:focus-visible {
+            outline: 4px solid var(--bl)
+        }
+
+        .day.blank {
+            visibility: hidden
+        }
+
+        .panel {
+            background: var(--cream);
+            border-radius: 26px;
+            padding: 24px;
+            margin-top: 20px;
+            min-height: 200px
+        }
+
+        .panel h3 {
+            margin: 0 0 4px;
+            font-size: 28px
+        }
+
+        .cols {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 22px;
+            margin-top: 14px
+        }
+
+        .panel ul {
+            list-style: none;
+            padding: 0;
+            margin: 8px 0 0;
+            max-height: 260px;
+            overflow: auto
+        }
+
+        .panel li {
+            padding: 6px 0;
+            border-bottom: 1px dashed #8886;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            gap: 8px
+        }
+
+        .panel a {
+            color: var(--bl);
+            font-weight: 800;
+            text-decoration: none
+        }
+
+        .off {
+            font-size: 12px;
+            font-weight: 800;
+            color: #fff;
+            border-radius: 8px;
+            padding: 1px 7px;
+            white-space: nowrap;
+            background: var(--tu)
+        }
+
+        .bars {
+            display: grid;
+            gap: 8px
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 130px 1fr 34px;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px
+        }
+
+        .row .bar {
+            height: 22px;
+            border-radius: 11px;
+            background: var(--c);
+            width: var(--w)
+        }
+
+        .row b {
+            font-weight: 800
+        }
+
+        .prices {
+            background: var(--bl);
+            color: #fff;
+            margin-top: 70px;
+            padding: 56px 0 70px
+        }
+
+        .prices h2 {
+            margin-top: 0
+        }
+
+        .pgrid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 14px;
+            margin: 26px 0
+        }
+
+        .pgrid div {
+            background: #fff;
+            color: #000;
+            border-radius: 20px;
+            padding: 16px;
+            transform: rotate(var(--r))
+        }
+
+        .pgrid b {
+            display: block;
+            font-size: 40px;
+            line-height: 1;
+            color: var(--bl);
+            font-weight: 800
+        }
+
+        .podium {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            font-size: 22px;
+            font-weight: 800;
+            align-items: center
+        }
+
+        footer {
+            padding: 36px 0 50px;
+            font-size: 13px;
+            opacity: .75
+        }
+
+        @media(max-width:640px) {
+            .cal {
+                gap: 4px
+            }
+
+            .day {
+                min-height: 84px;
+                padding: 5px;
+                border-radius: 10px
+            }
+
+            .day .cat {
+                font-size: 9px;
+                padding: 2px 4px
+            }
+
+            .day .n {
+                font-size: 15px
+            }
+
+            .row {
+                grid-template-columns: 100px 1fr 30px
+            }
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            * {
+                transition: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="wrap">
+            <div class="logo"><img class="logo-img" alt="Open Food Facts"
+                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gQ3JlYXRlZCB3aXRoIElua3NjYXBlIChodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy8pIC0tPgoKPHN2ZwogICB3aWR0aD0iMjc2IgogICBoZWlnaHQ9IjQ4IgogICB2aWV3Qm94PSIwIDAgMjc2IDQ4IgogICB2ZXJzaW9uPSIxLjEiCiAgIGlkPSJzdmcxMzI5IgogICBpbmtzY2FwZTp2ZXJzaW9uPSIxLjIgKDE6MS4yKzIwMjIwNTI0MTUwNCtkYTMxNmI2OTc0KSIKICAgc29kaXBvZGk6ZG9jbmFtZT0ib2ZmLWxvZ28taG9yaXpvbnRhbC1saWdodC5zdmciCiAgIHhtbG5zOmlua3NjYXBlPSJodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy9uYW1lc3BhY2VzL2lua3NjYXBlIgogICB4bWxuczpzb2RpcG9kaT0iaHR0cDovL3NvZGlwb2RpLnNvdXJjZWZvcmdlLm5ldC9EVEQvc29kaXBvZGktMC5kdGQiCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPHNvZGlwb2RpOm5hbWVkdmlldwogICAgIGlkPSJuYW1lZHZpZXcxMzMxIgogICAgIHBhZ2Vjb2xvcj0iI2ZmZmZmZiIKICAgICBib3JkZXJjb2xvcj0iIzY2NjY2NiIKICAgICBib3JkZXJvcGFjaXR5PSIxLjAiCiAgICAgaW5rc2NhcGU6c2hvd3BhZ2VzaGFkb3c9IjIiCiAgICAgaW5rc2NhcGU6cGFnZW9wYWNpdHk9IjAuMCIKICAgICBpbmtzY2FwZTpwYWdlY2hlY2tlcmJvYXJkPSIwIgogICAgIGlua3NjYXBlOmRlc2tjb2xvcj0iI2QxZDFkMSIKICAgICBpbmtzY2FwZTpkb2N1bWVudC11bml0cz0ibW0iCiAgICAgc2hvd2dyaWQ9ImZhbHNlIgogICAgIGlua3NjYXBlOnpvb209IjIuMjcyNzgwOSIKICAgICBpbmtzY2FwZTpjeD0iMTMwLjAxNjkzIgogICAgIGlua3NjYXBlOmN5PSI4OC42NTc5MDkiCiAgICAgaW5rc2NhcGU6d2luZG93LXdpZHRoPSIyNTYwIgogICAgIGlua3NjYXBlOndpbmRvdy1oZWlnaHQ9IjE0NDAiCiAgICAgaW5rc2NhcGU6d2luZG93LXg9IjAiCiAgICAgaW5rc2NhcGU6d2luZG93LXk9Ii0zNyIKICAgICBpbmtzY2FwZTp3aW5kb3ctbWF4aW1pemVkPSIxIgogICAgIGlua3NjYXBlOmN1cnJlbnQtbGF5ZXI9ImxheWVyMSIgLz4KICA8ZGVmcwogICAgIGlkPSJkZWZzMTMyNiIgLz4KICA8ZwogICAgIGlua3NjYXBlOmxhYmVsPSJDYWxxdWUgMSIKICAgICBpbmtzY2FwZTpncm91cG1vZGU9ImxheWVyIgogICAgIGlkPSJsYXllcjEiPgogICAgPGcKICAgICAgIGlkPSJnMTE4MSIKICAgICAgIHRyYW5zZm9ybT0ibWF0cml4KDAuMzM4MDc1NzksMCwwLDAuMzM4MDc1NzksLTMzLjExNzkwNCwtMzMuMTIxMjg1KSI+CiAgICAgIDxnCiAgICAgICAgIGlkPSJnMTEzNyI+CiAgICAgICAgPHJlY3QKICAgICAgICAgICBjbGFzcz0iZyIKICAgICAgICAgICB4PSI0NDUuMzkwMDEiCiAgICAgICAgICAgeT0iMTIzLjk0IgogICAgICAgICAgIHdpZHRoPSIyNDkuNjQiCiAgICAgICAgICAgaGVpZ2h0PSI4OC45NDk5OTciCiAgICAgICAgICAgcng9IjE0Ljc4IgogICAgICAgICAgIHJ5PSIxNC43OCIKICAgICAgICAgICB0cmFuc2Zvcm09InJvdGF0ZSgtNSw1NzAuMjMyNzgsMTY4LjQzMzA1KSIKICAgICAgICAgICBpZD0icmVjdDExMjUiCiAgICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmODcxNCIgLz4KICAgICAgICA8ZwogICAgICAgICAgIGlkPSJnMTEzNSI+CiAgICAgICAgICA8cGF0aAogICAgICAgICAgICAgY2xhc3M9ImUiCiAgICAgICAgICAgICBkPSJtIDQ2Ni44NywyMDQuOTggLTQuOCwtNTQuODUgMzcuNTUsLTMuMjkgMC44Nyw5Ljk0IC0yNi4xNCwyLjI5IDEuMjIsMTMuOTIgMjIuNDYsLTEuOTYgMC44Nyw5Ljk0IC0yMi40NiwxLjk2IDEuODQsMjEuMDYgLTExLjQxLDEgeiIKICAgICAgICAgICAgIGlkPSJwYXRoMTEyNyIKICAgICAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmYiIC8+CiAgICAgICAgICA8cGF0aAogICAgICAgICAgICAgY2xhc3M9ImUiCiAgICAgICAgICAgICBkPSJtIDUzNS42NSwxOTkuODYgYyAtNC4xMiwwLjM2IC04LjAxLC0wLjAyIC0xMS42NywtMS4xMyAtMy42NiwtMS4xMSAtNi45MSwtMi44NSAtOS43NywtNS4xOSAtMi44NSwtMi4zNSAtNS4xNiwtNS4xNyAtNi45NCwtOC40OCAtMS43NywtMy4zMSAtMi44NCwtNi45NyAtMy4xOSwtMTEgLTAuMzUsLTQuMDIgMC4wNSwtNy44MiAxLjE5LC0xMS4zOCAxLjE1LC0zLjU2IDIuOTIsLTYuNzMgNS4zMywtOS41MiAyLjQsLTIuNzggNS4zMSwtNS4wNCA4LjcyLC02Ljc3IDMuNDEsLTEuNzMgNy4yLC0yLjc4IDExLjM3LC0zLjE1IDQuMTcsLTAuMzcgOC4wOSwwIDExLjc1LDEuMTIgMy42NiwxLjEyIDYuOTEsMi44MyA5Ljc2LDUuMTYgMi44NSwyLjMyIDUuMTUsNS4xNCA2LjksOC40NSAxLjc1LDMuMzEgMi44LDYuOTggMy4xNSwxMSAwLjM1LDQuMDMgLTAuMDYsNy44MiAtMS4yMywxMS4zOCAtMS4xNywzLjU2IC0yLjk2LDYuNzUgLTUuMzYsOS41NiAtMi40LDIuODEgLTUuMzEsNS4wOCAtOC43Miw2LjgxIC0zLjQxLDEuNzMgLTcuMTgsMi43OCAtMTEuMywzLjE0IHogbSAtMC45LC0xMC4zMSBjIDIuNSwtMC4yMiA0Ljc4LC0wLjg2IDYuODQsLTEuOTMgMi4wNiwtMS4wNyAzLjgzLC0yLjQ3IDUuMzEsLTQuMjEgMS40OCwtMS43NCAyLjU3LC0zLjc1IDMuMjYsLTYuMDMgMC42OSwtMi4yOSAwLjkyLC00Ljc1IDAuNjksLTcuNDEgLTAuMjMsLTIuNjUgLTAuODksLTUuMDMgLTEuOTYsLTcuMTQgLTEuMDcsLTIuMTEgLTIuNDksLTMuOSAtNC4yNSwtNS4zOCAtMS43NiwtMS40OCAtMy43NSwtMi41NSAtNS45NiwtMy4yMyAtMi4yMSwtMC42NyAtNC41NywtMC45IC03LjA3LC0wLjY4IC0yLjUsMC4yMiAtNC43OCwwLjg1IC02Ljg0LDEuOSAtMi4wNiwxLjA1IC0zLjgzLDIuNDUgLTUuMzEsNC4yMSAtMS40OCwxLjc2IC0yLjU2LDMuNzcgLTMuMjYsNi4wMyAtMC42OSwyLjI2IC0wLjkyLDQuNzIgLTAuNjksNy4zNyAwLjIzLDIuNjUgMC44OSw1LjA0IDEuOTYsNy4xNyAxLjA4LDIuMTMgMi41LDMuOTIgNC4yNSw1LjM4IDEuNzYsMS40NSAzLjc1LDIuNTMgNS45NiwzLjIzIDIuMjEsMC43IDQuNTcsMC45NCA3LjA3LDAuNzIgeiIKICAgICAgICAgICAgIGlkPSJwYXRoMTEyOSIKICAgICAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmYiIC8+CiAgICAgICAgICA8cGF0aAogICAgICAgICAgICAgY2xhc3M9ImUiCiAgICAgICAgICAgICBkPSJtIDU5OC4yNCwxOTQuMzggYyAtNC4xMiwwLjM2IC04LjAxLC0wLjAyIC0xMS42NywtMS4xMyAtMy42NiwtMS4xMSAtNi45MSwtMi44NSAtOS43NywtNS4xOSAtMi44NSwtMi4zNSAtNS4xNiwtNS4xNyAtNi45NCwtOC40OCAtMS43NywtMy4zMSAtMi44NCwtNi45NyAtMy4xOSwtMTEgLTAuMzUsLTQuMDIgMC4wNSwtNy44MiAxLjE5LC0xMS4zOCAxLjE1LC0zLjU2IDIuOTIsLTYuNzMgNS4zMywtOS41MiAyLjQsLTIuNzggNS4zMSwtNS4wNCA4LjcyLC02Ljc3IDMuNDEsLTEuNzMgNy4yLC0yLjc4IDExLjM3LC0zLjE1IDQuMTcsLTAuMzYgOC4wOSwwIDExLjc1LDEuMTIgMy42NiwxLjEyIDYuOTEsMi44MyA5Ljc2LDUuMTYgMi44NSwyLjMyIDUuMTUsNS4xNCA2LjksOC40NSAxLjc1LDMuMzEgMi44LDYuOTggMy4xNSwxMSAwLjM1LDQuMDMgLTAuMDYsNy44MiAtMS4yMywxMS4zOCAtMS4xNywzLjU3IC0yLjk2LDYuNzUgLTUuMzYsOS41NiAtMi40LDIuODEgLTUuMzEsNS4wOCAtOC43Miw2LjgxIC0zLjQxLDEuNzMgLTcuMTgsMi43OCAtMTEuMywzLjE0IHogbSAtMC45LC0xMC4zMSBjIDIuNSwtMC4yMiA0Ljc4LC0wLjg2IDYuODQsLTEuOTMgMi4wNiwtMS4wNyAzLjgzLC0yLjQ3IDUuMzEsLTQuMjEgMS40OCwtMS43NCAyLjU3LC0zLjc1IDMuMjYsLTYuMDMgMC42OSwtMi4yOSAwLjkyLC00Ljc1IDAuNjksLTcuNDEgLTAuMjMsLTIuNjUgLTAuODksLTUuMDMgLTEuOTYsLTcuMTQgLTEuMDcsLTIuMTEgLTIuNDksLTMuOSAtNC4yNSwtNS4zOCAtMS43NiwtMS40OCAtMy43NSwtMi41NSAtNS45NiwtMy4yMyAtMi4yMSwtMC42NyAtNC41NywtMC45IC03LjA3LC0wLjY4IC0yLjUsMC4yMiAtNC43OSwwLjg1IC02Ljg1LDEuOSAtMi4wNiwxLjA1IC0zLjgzLDIuNDUgLTUuMzEsNC4yMSAtMS40OCwxLjc2IC0yLjU2LDMuNzcgLTMuMjYsNi4wMyAtMC42OSwyLjI2IC0wLjkyLDQuNzIgLTAuNjksNy4zNyAwLjIzLDIuNjUgMC44OSw1LjA0IDEuOTYsNy4xNyAxLjA4LDIuMTMgMi41LDMuOTIgNC4yNSw1LjM4IDEuNzYsMS40NSAzLjc1LDIuNTMgNS45NiwzLjIzIDIuMjEsMC43IDQuNTcsMC45NCA3LjA3LDAuNzIgeiIKICAgICAgICAgICAgIGlkPSJwYXRoMTEzMSIKICAgICAgICAgICAgIHN0eWxlPSJmaWxsOiNmZmZmZmYiIC8+CiAgICAgICAgICA8cGF0aAogICAgICAgICAgICAgY2xhc3M9ImUiCiAgICAgICAgICAgICBkPSJtIDYzMy45NCwxOTAuMzcgLTQuOCwtNTQuODUgMTcuODksLTEuNTcgYyA1Ljk0LC0wLjUyIDExLjIsMC4yMSAxNS43NywyLjE4IDQuNTcsMS45NyA4LjI0LDQuOTIgMTEuMDEsOC44MyAyLjc2LDMuOTEgNC4zOCw4LjUyIDQuODQsMTMuODIgMC40Niw1LjMgLTAuMzMsMTAuMTMgLTIuMzcsMTQuNDkgLTIuMDQsNC4zNiAtNS4xNSw3LjkxIC05LjMxLDEwLjY1IC00LjE2LDIuNzQgLTkuMjEsNC4zNyAtMTUuMTUsNC44OSBsIC0xNy44OSwxLjU3IHogbSAxMC41NCwtMTAuOTQgNi43NywtMC41OSBjIDMuNTgsLTAuMzEgNi42MSwtMS4zMSA5LjA5LC0yLjk4IDIuNDcsLTEuNjggNC4zMiwtMy44OSA1LjU0LC02LjY0IDEuMjIsLTIuNzUgMS42NywtNS45IDEuMzYsLTkuNDMgLTAuMzEsLTMuNTggLTEuMzEsLTYuNjEgLTIuOTgsLTkuMDkgLTEuNjgsLTIuNDcgLTMuODgsLTQuMzEgLTYuNiwtNS41MSAtMi43MywtMS4yIC01Ljg4LC0xLjY0IC05LjQ2LC0xLjMyIGwgLTYuNzcsMC41OSAzLjA2LDM0Ljk3IHoiCiAgICAgICAgICAgICBpZD0icGF0aDExMzMiCiAgICAgICAgICAgICBzdHlsZT0iZmlsbDojZmZmZmZmIiAvPgogICAgICAgIDwvZz4KICAgICAgPC9nPgogICAgICA8ZwogICAgICAgICBpZD0iZzExNDkiPgogICAgICAgIDxwYXRoCiAgICAgICAgICAgZD0ibSA3MzcuMjUsMTI4LjkyIGMgLTMuNzMsMCAtNi45NiwwLjY4IC05LjcxLDIuMDQgLTIuNzUsMS4zNiAtNC44NiwzLjMzIC02LjM0LDUuOSAtMS40OCwyLjU3IC0yLjIyLDUuNzIgLTIuMjIsOS40NSB2IDEuNTEgaCAtOC41MSB2IDEwLjM4IGggOC41MSB2IDM3Ljg3IEggNzMwLjYgViAxNTguMiBoIDEwLjczIFYgMTQ3LjgyIEggNzMwLjYgdiAtMS41MSBjIDAsLTIuNDggMC43MSwtNC4zIDIuMTMsLTUuNDUgMS40MiwtMS4xNSAzLjQzLC0xLjczIDYuMDMsLTEuNzMgMC40MSwwIDAuODcsMC4wMiAxLjM3LDAuMDQgMC41LDAuMDMgMS4wNSwwLjEgMS42NCwwLjIyIHYgLTEwLjAyIGMgLTAuNTksLTAuMTIgLTEuMzIsLTAuMjIgLTIuMTcsLTAuMzEgLTAuODYsLTAuMDkgLTEuNjQsLTAuMTMgLTIuMzUsLTAuMTMgeiIKICAgICAgICAgICBpZD0icGF0aDExMzkiIC8+CiAgICAgICAgPHBhdGgKICAgICAgICAgICBkPSJtIDc3NS43MywxNDguOTIgYyAtMy4wMiwtMS40NSAtNi41MSwtMi4xNyAtMTAuNDcsLTIuMTcgLTMuMjUsMCAtNi4yNywwLjUzIC05LjA1LDEuNiAtMi43OCwxLjA2IC01LjE5LDIuNTMgLTcuMjMsNC4zOSAtMi4wNCwxLjg2IC0zLjUzLDQuMDcgLTQuNDgsNi42MSBsIDkuNDksNC42MSBjIDAuODksLTIuMTMgMi4yOSwtMy44NyA0LjIxLC01LjIzIDEuOTIsLTEuMzYgNC4xMiwtMi4wNCA2LjYxLC0yLjA0IDIuNjYsMCA0Ljc5LDAuNyA2LjM5LDIuMDggMS42LDEuMzkgMi4zOSwzLjEyIDIuMzksNS4xOSB2IDEuNTYgbCAtMTQuMjgsMi4zNCBjIC0zLjc5LDAuNTkgLTYuOTIsMS42IC05LjQsMy4wMiAtMi40OCwxLjQyIC00LjMzLDMuMTggLTUuNTQsNS4yOCAtMS4yMSwyLjEgLTEuODIsNC40OCAtMS44Miw3LjE0IDAsMi42NiAwLjY4LDUuMjIgMi4wNCw3LjMyIDEuMzYsMi4xIDMuMywzLjcxIDUuODEsNC44MyAyLjUxLDEuMTIgNS40NSwxLjY5IDguODMsMS42OSAyLjY2LDAgNS4wNywtMC4zNSA3LjIzLC0xLjA2IDIuMTYsLTAuNzEgNC4xMSwtMS43NyA1Ljg1LC0zLjE5IDAuNzEsLTAuNTggMS4zNywtMS4yMiAyLC0xLjg5IHYgNS4wOSBoIDExIHYgLTMyLjExIGMgMCwtMy4zNyAtMC44NCwtNi4zNiAtMi41MywtOC45NiAtMS42OSwtMi42IC00LjA0LC00LjYzIC03LjA1LC02LjA4IHogbSAtMy42NCwzMy40OCBjIC0xLjAxLDEuODMgLTIuNDQsMy4yNyAtNC4zLDQuMyAtMS44NiwxLjA0IC00LjAxLDEuNTUgLTYuNDMsMS41NSAtMS44OSwwIC0zLjQ3LC0wLjQ5IC00Ljc1LC0xLjQ2IC0xLjI3LC0wLjk4IC0xLjkxLC0yLjI5IC0xLjkxLC0zLjk1IDAsLTEuNjYgMC41NiwtMy4wOSAxLjY5LC00LjEyIDEuMTIsLTEuMDMgMi44NCwtMS43NiA1LjE0LC0yLjE3IGwgMTIuMDYsLTIuMTQgdiAyLjA1IGMgMCwyLjEzIC0wLjUsNC4xMSAtMS41MSw1Ljk0IHoiCiAgICAgICAgICAgaWQ9InBhdGgxMTQxIiAvPgogICAgICAgIDxwYXRoCiAgICAgICAgICAgZD0ibSA4MDkuOTQsMTU5LjMgYyAxLjk4LC0xLjIxIDQuMjQsLTEuODIgNi43OSwtMS44MiAyLjcyLDAgNS4xMywwLjcyIDcuMjMsMi4xNyAyLjEsMS40NSAzLjU5LDMuNDEgNC40OCw1LjkgbCAxMC4yLC00LjUyIGMgLTAuOTUsLTIuODQgLTIuNSwtNS4zMiAtNC42NiwtNy40NSAtMi4xNiwtMi4xMyAtNC43MiwtMy44IC03LjY3LC01LjAxIC0yLjk2LC0xLjIxIC02LjE1LC0xLjgyIC05LjU4LC0xLjgyIC00Ljg1LDAgLTkuMTgsMS4wOSAtMTIuOTksMy4yOCAtMy44MSwyLjE5IC02LjgyLDUuMTcgLTksOC45NiAtMi4xOSwzLjc4IC0zLjI4LDguMDcgLTMuMjgsMTIuODYgMCw0Ljc5IDEuMTEsOS4wOSAzLjMzLDEyLjkgMi4yMiwzLjgxIDUuMjIsNi44MyA5LDkuMDUgMy43OCwyLjIyIDguMSwzLjMzIDEyLjk1LDMuMzMgMy40OSwwIDYuNzEsLTAuNjEgOS42NywtMS44MiAyLjk2LC0xLjIxIDUuNSwtMi45IDcuNjMsLTUuMDYgMi4xMywtMi4xNiAzLjY3LC00LjYgNC42MSwtNy4zMiBsIC0xMC4yLC00LjYxIGMgLTAuOTUsMi40OCAtMi40NCw0LjQ2IC00LjQ4LDUuOTQgLTIuMDQsMS40OCAtNC40NSwyLjIyIC03LjIzLDIuMjIgLTIuNTQsMCAtNC44MSwtMC42MiAtNi43OSwtMS44NiAtMS45OCwtMS4yNCAtMy41MywtMi45NiAtNC42NiwtNS4xNCAtMS4xMiwtMi4xOSAtMS42OSwtNC43IC0xLjY5LC03LjU0IDAsLTIuODQgMC41NiwtNS4yOCAxLjY5LC03LjQ5IDEuMTIsLTIuMjIgMi42NywtMy45MyA0LjY2LC01LjE0IHoiCiAgICAgICAgICAgaWQ9InBhdGgxMTQzIiAvPgogICAgICAgIDxwYXRoCiAgICAgICAgICAgZD0ibSA4NjkuMzEsMTg2LjQgYyAtMS44OSwwIC0zLjQ1LC0wLjMgLTQuNjYsLTAuODkgLTEuMjEsLTAuNTkgLTIuMSwtMS40NSAtMi42NiwtMi41NyAtMC41NiwtMS4xMiAtMC44NCwtMi40OCAtMC44NCwtNC4wOCB2IC0yMC42NyBoIDExLjA5IHYgLTEwLjM4IGggLTExLjA5IHYgLTExIGggLTExLjcxIHYgMy43MyBjIDAsMi4zNyAtMC42NCw0LjE3IC0xLjkxLDUuNDEgLTEuMjcsMS4yNCAtMy4wOSwxLjg2IC01LjQ1LDEuODYgaCAtMC44OSB2IDEwLjM4IGggOC4yNSB2IDIxLjI5IGMgMCw1LjQ0IDEuNTEsOS42NSA0LjUyLDEyLjY0IDMuMDIsMi45OSA3LjI0LDQuNDggMTIuNjgsNC40OCAwLjg5LDAgMS44NiwtMC4wNiAyLjkzLC0wLjE4IDEuMDYsLTAuMTIgMi4wMSwtMC4yNCAyLjg0LC0wLjM1IHYgLTkuOTMgYyAtMC41MywwLjA2IC0xLjA4LDAuMTIgLTEuNjQsMC4xOCAtMC41NiwwLjA2IC0xLjA1LDAuMDkgLTEuNDYsMC4wOSB6IgogICAgICAgICAgIGlkPSJwYXRoMTE0NSIgLz4KICAgICAgICA8cGF0aAogICAgICAgICAgIGQ9Im0gOTAxLjkyLDE2OC4zOSAtNy43MiwtMi4zMSBjIC0xLjEyLC0wLjM1IC0yLjExLC0wLjc0IC0yLjk3LC0xLjE1IC0wLjg2LC0wLjQxIC0xLjUyLC0wLjk0IC0yLC0xLjYgLTAuNDcsLTAuNjUgLTAuNzEsLTEuMzkgLTAuNzEsLTIuMjIgMCwtMS40OCAwLjU2LC0yLjY1IDEuNjksLTMuNSAxLjEyLC0wLjg2IDIuNjYsLTEuMjkgNC42MSwtMS4yOSAyLjQyLDAgNC42MSwwLjY0IDYuNTYsMS45MSAxLjk1LDEuMjcgMy4zNCwzIDQuMTcsNS4xOSBsIDguODcsLTQuMTcgYyAtMS40OCwtMy45NiAtMy45NiwtNy4wNCAtNy40NSwtOS4yMiAtMy40OSwtMi4xOSAtNy41MSwtMy4yOCAtMTIuMDYsLTMuMjggLTMuNDksMCAtNi41OCwwLjYyIC05LjI3LDEuODYgLTIuNjksMS4yNCAtNC43OSwyLjk3IC02LjMsNS4xOSAtMS41MSwyLjIyIC0yLjI2LDQuOCAtMi4yNiw3Ljc2IDAsMy4zMSAxLjA1LDYuMTkgMy4xNSw4LjY1IDIuMSwyLjQ1IDUuMTYsNC4yNCA5LjE4LDUuMzcgbCA3Ljg5LDIuMjIgYyAxLjA2LDAuMyAyLjAxLDAuNjcgMi44NCwxLjExIDAuODMsMC40NCAxLjQ5LDAuOTggMiwxLjYgMC41LDAuNjIgMC43NSwxLjQxIDAuNzUsMi4zNSAwLDEuNTQgLTAuNjIsMi43OCAtMS44NiwzLjczIC0xLjI0LDAuOTUgLTIuOSwxLjQyIC00Ljk3LDEuNDIgLTIuNzIsMCAtNS4xOSwtMC43NyAtNy40MSwtMi4zMSAtMi4yMiwtMS41NCAtMy45NSwtMy42NyAtNS4xOSwtNi4zOSBsIC04Ljc4LDQuMTcgYyAxLjQ4LDQuMiA0LjEyLDcuNTMgNy45NCw5Ljk4IDMuODEsMi40NSA4LjI5LDMuNjggMTMuNDQsMy42OCAzLjY3LDAgNi44NiwtMC42MiA5LjU4LC0xLjg2IDIuNzIsLTEuMjQgNC44NSwtMi45NyA2LjM5LC01LjE5IDEuNTQsLTIuMjIgMi4zMSwtNC43NyAyLjMxLC03LjY3IDAsLTMuNDMgLTEuMDgsLTYuMzMgLTMuMjQsLTguNjkgLTIuMTYsLTIuMzYgLTUuMjIsLTQuMTQgLTkuMTgsLTUuMzIgeiIKICAgICAgICAgICBpZD0icGF0aDExNDciIC8+CiAgICAgIDwvZz4KICAgICAgPGcKICAgICAgICAgaWQ9ImcxMTU5Ij4KICAgICAgICA8cGF0aAogICAgICAgICAgIGQ9Im0gMjU4LjUzLDE1MC4wMyBjIC0zLjg0LC0yLjE5IC04LjE2LC0zLjI4IC0xMi45NSwtMy4yOCAtNC43OSwwIC05LjAyLDEuMDkgLTEyLjg2LDMuMjggLTMuODQsMi4xOSAtNi45Miw1LjE3IC05LjIyLDguOTYgLTIuMzEsMy43OCAtMy40Niw4LjEgLTMuNDYsMTIuOTUgMCw0Ljg1IDEuMTUsOS4xNyAzLjQ2LDEyLjk1IDIuMzEsMy43OCA1LjM5LDYuNzcgOS4yNyw4Ljk2IDMuODcsMi4xOSA4LjE0LDMuMjggMTIuODIsMy4yOCA0LjY4LDAgOS4wMiwtMS4wOSAxMi44NiwtMy4yOCAzLjg0LC0yLjE5IDYuOTIsLTUuMTcgOS4yMiwtOC45NiAyLjMxLC0zLjc4IDMuNDYsLTguMSAzLjQ2LC0xMi45NSAwLC00Ljg1IC0xLjE0LC05LjI0IC0zLjQxLC0xMi45OSAtMi4yOCwtMy43NSAtNS4zNCwtNi43MyAtOS4xOCwtOC45MSB6IG0gLTEuMjksMjkuNCBjIC0xLjE1LDIuMjIgLTIuNzIsMy45NSAtNC43LDUuMTkgLTEuOTgsMS4yNCAtNC4zLDEuODYgLTYuOTYsMS44NiAtMi42NiwwIC00LjkxLC0wLjYyIC02LjkyLC0xLjg2IC0yLjAxLC0xLjI0IC0zLjU5LC0yLjk3IC00Ljc1LC01LjE5IC0xLjE1LC0yLjIyIC0xLjczLC00LjcxIC0xLjczLC03LjQ5IDAsLTIuNzggMC41OCwtNS4yNiAxLjczLC03LjQ1IDEuMTUsLTIuMTkgMi43MywtMy45IDQuNzUsLTUuMTQgMi4wMSwtMS4yNCA0LjMyLC0xLjg2IDYuOTIsLTEuODYgMi42LDAgNC45OCwwLjYyIDYuOTYsMS44NiAxLjk4LDEuMjQgMy41NSwyLjk2IDQuNyw1LjE0IDEuMTUsMi4xOSAxLjczLDQuNjcgMS43Myw3LjQ1IDAsMi43OCAtMC41OCw1LjI4IC0xLjczLDcuNDkgeiIKICAgICAgICAgICBpZD0icGF0aDExNTEiIC8+CiAgICAgICAgPHBhdGgKICAgICAgICAgICBkPSJtIDMxNi4yMywxNTAuMTIgYyAtMy42NywtMi4yNSAtNy43OCwtMy4zNyAtMTIuMzMsLTMuMzcgLTMuNzIsMCAtNy4wMSwwLjcyIC05Ljg0LDIuMTcgLTIuMjcsMS4xNiAtNC4xNiwyLjcgLTUuNjgsNC42IHYgLTUuNzEgaCAtMTEgdiA2NS45OSBoIDExLjcxIHYgLTIyLjM3IGMgMS40MiwxLjUxIDMuMTIsMi43NCA1LjEsMy42NiAyLjkzLDEuMzYgNi4xMywyLjA0IDkuNjIsMi4wNCA0LjY3LDAgOC44NCwtMS4xMSAxMi41MSwtMy4zMyAzLjY3LC0yLjIyIDYuNTYsLTUuMjUgOC42OSwtOS4wOSAyLjEzLC0zLjg0IDMuMTksLTguMSAzLjE5LC0xMi43NyAwLC00LjY3IC0xLjA4LC04Ljk5IC0zLjI0LC0xMi43NyAtMi4xNiwtMy43OCAtNS4wNywtNi44IC04Ljc0LC05LjA1IHogbSAtMS44NiwyOS4zNiBjIC0xLjE4LDIuMTkgLTIuNzksMy45IC00LjgzLDUuMTQgLTIuMDQsMS4yNCAtNC4zOSwxLjg2IC03LjA1LDEuODYgLTIuNjYsMCAtNC44MywtMC42MiAtNi44NywtMS44NiAtMi4wNCwtMS4yNCAtMy42NCwtMi45NiAtNC43OSwtNS4xNCAtMS4xNSwtMi4xOSAtMS43MywtNC43IC0xLjczLC03LjU0IDAsLTIuODQgMC41OCwtNS4yNiAxLjczLC03LjQ1IDEuMTUsLTIuMTkgMi43NSwtMy45IDQuNzksLTUuMTQgMi4wNCwtMS4yNCA0LjMzLC0xLjg2IDYuODcsLTEuODYgMi41NCwwIDUuMDEsMC42MiA3LjA1LDEuODYgMi4wNCwxLjI0IDMuNjUsMi45NiA0LjgzLDUuMTQgMS4xOCwyLjE5IDEuNzcsNC42NyAxLjc3LDcuNDUgMCwyLjc4IC0wLjU5LDUuMzUgLTEuNzcsNy41NCB6IgogICAgICAgICAgIGlkPSJwYXRoMTE1MyIgLz4KICAgICAgICA8cGF0aAogICAgICAgICAgIGQ9Im0gMzczLjcxLDE1My43NiBjIC0yLjAxLC0yLjE5IC00LjQ1LC0zLjkgLTcuMzIsLTUuMTQgLTIuODcsLTEuMjQgLTYuMTksLTEuODYgLTkuOTgsLTEuODYgLTQuNTUsMCAtOC42MywxLjA5IC0xMi4yNCwzLjI4IC0zLjYxLDIuMTkgLTYuNDcsNS4xNiAtOC42LDguOTEgLTIuMTMsMy43NiAtMy4xOSw4LjA2IC0zLjE5LDEyLjkgMCw0Ljg0IDEuMDMsOC45MyAzLjEsMTIuNzcgMi4wNywzLjg0IDQuOTgsNi44OSA4Ljc0LDkuMTQgMy43NSwyLjI1IDguMTIsMy4zNyAxMy4wOCwzLjM3IDMuMjUsMCA2LjI3LC0wLjUgOS4wNSwtMS41MSAyLjc4LC0xIDUuMTcsLTIuMzkgNy4xOCwtNC4xNyAyLjAxLC0xLjc3IDMuNDksLTMuODEgNC40MywtNi4xMiBsIC05LjQsLTQuNjEgYyAtMS4wNiwxLjg5IC0yLjUzLDMuNCAtNC4zOSw0LjUyIC0xLjg2LDEuMTIgLTQuMTIsMS42OSAtNi43OSwxLjY5IC0yLjY3LDAgLTUuMDEsLTAuNjIgLTcuMDUsLTEuODYgLTIuMDQsLTEuMjQgLTMuNTgsLTMgLTQuNjEsLTUuMjggLTAuNjIsLTEuMzcgLTEuMDEsLTIuODYgLTEuMTcsLTQuNDggaCAzNC43NCBjIDAuMjQsLTAuNzEgMC40LC0xLjQ5IDAuNDksLTIuMzUgMC4wOSwtMC44NiAwLjEzLC0xLjczIDAuMTMsLTIuNjIgMCwtMy4yNSAtMC41MywtNi4yOCAtMS42LC05LjA5IC0xLjA2LC0yLjgxIC0yLjYsLTUuMzEgLTQuNjEsLTcuNDkgeiBtIC0yOC45MiwxMi41OSBjIDAuMiwtMS4wMiAwLjQ4LC0xLjk2IDAuODUsLTIuODQgMC45OCwtMi4zMSAyLjQxLC00LjA4IDQuMywtNS4zMiAxLjg5LC0xLjI0IDQuMDUsLTEuODYgNi40NywtMS44NiAyLjQyLDAgNC43MSwwLjYyIDYuNTIsMS44NiAxLjgsMS4yNCAzLjEsMi45MyAzLjksNS4wNiAwLjM2LDAuOTcgMC41OCwyLjAxIDAuNjUsMy4xIGggLTIyLjcgeiIKICAgICAgICAgICBpZD0icGF0aDExNTUiIC8+CiAgICAgICAgPHBhdGgKICAgICAgICAgICBkPSJtIDQyMC40NCwxNDkuMDYgYyAtMi43NSwtMS41NCAtNS45LC0yLjMxIC05LjQ1LC0yLjMxIC0zLjU1LDAgLTYuNDMsMC43NSAtOSwyLjI2IC0xLjk5LDEuMTYgLTMuNTMsMi43NSAtNC42Niw0Ljc0IHYgLTUuOTMgaCAtMTEgdiA0OC4yNSBoIDExLjcxIHYgLTI4LjI5IGMgMCwtMi4xMyAwLjQxLC0zLjk2IDEuMjQsLTUuNSAwLjgzLC0xLjU0IDEuOTgsLTIuNzIgMy40NiwtMy41NSAxLjQ4LC0wLjgzIDMuMTYsLTEuMjQgNS4wNiwtMS4yNCAxLjksMCAzLjU4LDAuNDEgNS4wNiwxLjI0IDEuNDgsMC44MyAyLjYzLDIuMDEgMy40NiwzLjU1IDAuODMsMS41NCAxLjI0LDMuMzcgMS4yNCw1LjUgdiAyOC4yOSBoIDExLjYyIHYgLTMxLjA0IGMgMCwtMy42MSAtMC43NywtNi43OSAtMi4zMSwtOS41MyAtMS41NCwtMi43NSAtMy42OCwtNC44OSAtNi40MywtNi40MyB6IgogICAgICAgICAgIGlkPSJwYXRoMTE1NyIgLz4KICAgICAgPC9nPgogICAgICA8ZwogICAgICAgICBpZD0iZzExNzkiPgogICAgICAgIDxnCiAgICAgICAgICAgaWQ9ImcxMTcxIj4KICAgICAgICAgIDxwYXRoCiAgICAgICAgICAgICBjbGFzcz0iZiIKICAgICAgICAgICAgIGQ9Im0gOTcuOTcsMTcxLjU1IGMgMCwtMjcuMDUgMjEuOTMsLTQ4Ljk4IDQ4Ljk4LC00OC45OCAyNy4wNSwwIDQ4Ljk4LDIxLjkzIDQ4Ljk4LDQ4Ljk4IHoiCiAgICAgICAgICAgICBpZD0icGF0aDExNjEiCiAgICAgICAgICAgICBzdHlsZT0iZmlsbDojZmY4YzE0IiAvPgogICAgICAgICAgPHBhdGgKICAgICAgICAgICAgIGNsYXNzPSJlIgogICAgICAgICAgICAgZD0ibSAxODMuNTIsMTcxLjU1IGMgMCwyMC4yIC0xNi4zNywzNi41NyAtMzYuNTcsMzYuNTcgLTIwLjIsMCAtMzYuNTcsLTE2LjM3IC0zNi41NywtMzYuNTcgaCA3My4xMyB6IgogICAgICAgICAgICAgaWQ9InBhdGgxMTYzIgogICAgICAgICAgICAgc3R5bGU9ImZpbGw6I2ZmZmZmZiIgLz4KICAgICAgICAgIDxjaXJjbGUKICAgICAgICAgICAgIGNsYXNzPSJoIgogICAgICAgICAgICAgY3g9IjE2My41Mzk5OSIKICAgICAgICAgICAgIGN5PSIxMzkuOTIiCiAgICAgICAgICAgICByPSIyLjY5MDAwMDEiCiAgICAgICAgICAgICBpZD0iY2lyY2xlMTE2NSIKICAgICAgICAgICAgIHN0eWxlPSJmaWxsOiM4YzNjMDAiIC8+CiAgICAgICAgICA8Y2lyY2xlCiAgICAgICAgICAgICBjbGFzcz0iaCIKICAgICAgICAgICAgIGN4PSIxNzYuNjYiCiAgICAgICAgICAgICBjeT0iMTUxLjk2MDAxIgogICAgICAgICAgICAgcj0iMi42OTAwMDAxIgogICAgICAgICAgICAgaWQ9ImNpcmNsZTExNjciCiAgICAgICAgICAgICBzdHlsZT0iZmlsbDojOGMzYzAwIiAvPgogICAgICAgICAgPGNpcmNsZQogICAgICAgICAgICAgY2xhc3M9ImgiCiAgICAgICAgICAgICBjeD0iMTYxLjgyMDAxIgogICAgICAgICAgICAgY3k9IjE1NC45MSIKICAgICAgICAgICAgIHI9IjIuNjkwMDAwMSIKICAgICAgICAgICAgIGlkPSJjaXJjbGUxMTY5IgogICAgICAgICAgICAgc3R5bGU9ImZpbGw6IzhjM2MwMCIgLz4KICAgICAgICA8L2c+CiAgICAgICAgPHBhdGgKICAgICAgICAgICBkPSJtIDEyMy4yLDIxNC4zNyAtOC43LDIwLjc4IDExLjQ1LDQuOCA4Ljc4LC0yMC45NiBjIDMuOTEsMS4wMSA4LjAxLDEuNTUgMTIuMjMsMS41NSAyNy4wMSwwIDQ4Ljk4LC0yMS45NyA0OC45OCwtNDguOTggaCAtMTIuNDIgYyAwLDIwLjE2IC0xNi40LDM2LjU3IC0zNi41NywzNi41NyAtMjAuMTcsMCAtMzYuNTcsLTE2LjQgLTM2LjU3LC0zNi41NyBIIDk3Ljk2IGMgMCwxOC4zOSAxMC4yLDM0LjQ0IDI1LjIzLDQyLjgyIHoiCiAgICAgICAgICAgaWQ9InBhdGgxMTczIiAvPgogICAgICAgIDxwYXRoCiAgICAgICAgICAgY2xhc3M9ImMiCiAgICAgICAgICAgZD0ibSAxNjcuMjEsOTcuOTcgYyAtOS42MywwIC0xOCw1LjM3IC0yMi4zMSwxMy4yNyAzLjMyLDMuMDggNS44MSw3LjAzIDcuMTEsMTEuNSAxMS4yMSwtMi41MiAxOS42MiwtMTIuNDIgMTkuODIsLTI0LjM0IC0xLjUsLTAuMjggLTMuMDQsLTAuNDMgLTQuNjIsLTAuNDMgeiIKICAgICAgICAgICBpZD0icGF0aDExNzUiCiAgICAgICAgICAgc3R5bGU9ImZpbGw6IzAwNjQxZSIgLz4KICAgICAgICA8cGF0aAogICAgICAgICAgIGNsYXNzPSJkIgogICAgICAgICAgIGQ9Im0gMTI3LjYyLDEwNC40MyBjIC0xLjkxLDAgLTMuNzYsMC4yMiAtNS41NSwwLjYxIDMuMDcsMTAuNTkgMTIuODMsMTguMzMgMjQuNCwxOC4zMyAxLjkxLDAgMy43NiwtMC4yMiA1LjU1LC0wLjYxIC0zLjA3LC0xMC41OSAtMTIuODMsLTE4LjMzIC0yNC40LC0xOC4zMyB6IgogICAgICAgICAgIGlkPSJwYXRoMTE3NyIKICAgICAgICAgICBzdHlsZT0iZmlsbDojMDA5NjFlIiAvPgogICAgICA8L2c+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K">
+            </div>
+            <h1>Scan<span class="tag">Tober</span></h1>
+            <p>One product category per day, all through October 2026. Open Food Facts contributors scanned, created,
+                fixed and added prices to products.</p>
+        </div>
+    </header>
+    <main class="wrap">
+        <div class="stats">
+            <div class="stat" style="--c:var(--or)"><b>2,571</b><span>products edited by 328 people</span></div>
+            <div class="stat" style="--c:var(--tu)"><b>160</b><span>products created by 55 contributors</span></div>
+            <div class="stat" style="--c:var(--pk)"><b>31</b><span>categories, one per day</span></div>
+            <div class="stat" style="--c:var(--bl)"><b>976</b><span>prices added on Open Prices</span></div>
+        </div>
+
+        <h2>The <span class="tag p">challenge</span> calendar</h2>
+        <p class="sub">Each tile is a day and its category. The fuller the tile, the more edits happened on the right
+            day. Black dots are products created around that date. Click a day for details.</p>
+        <div class="legend"><span><i style="background:var(--or);opacity:.5"></i>edits on day D</span><span><i
+                    style="background:var(--ink)"></i>product created (near day D)</span></div>
+        <div class="cal" id="cal"></div>
+        <div class="panel" id="panel" aria-live="polite"></div>
+
+        <h2>Which <span class="tag b">categories</span> drew the most interest?</h2>
+        <p class="sub">Number of edits on day D, per category (sample of 96 edits).</p>
+        <div class="bars" id="catbars"></div>
+
+        <h2>Who <span class="tag t">edited</span> on the right day?</h2>
+        <p class="sub">Contributors who edited a product from the day’s category on that very day (sample of 96 edits).
+        </p>
+        <div class="bars" id="top"></div>
+
+    </main>
+
+    <section class="prices">
+        <div class="wrap">
+            <div class="logo"><img class="logo-img" alt="Open Prices"
+                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjMzIiBoZWlnaHQ9IjEzOCIgdmlld0JveD0iMCAwIDYzMyAxMzgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0yNS4xNCAxMTEuODRMMTYuNDcgMTMyLjU0TDI3Ljg4IDEzNy4zMkwzNi42MiAxMTYuNDRDNDAuNTIgMTE3LjQ0IDQ0LjYgMTE3Ljk4IDQ4LjgxIDExNy45OEM3NS43MiAxMTcuOTggOTcuNjIgOTYuMDggOTcuNjIgNjkuMTdIODUuMjVDODUuMjUgODkuMjYgNjguOTEgMTA1LjYxIDQ4LjgxIDEwNS42MUMyOC43MSAxMDUuNjEgMTIuMzcgODkuMjcgMTIuMzcgNjkuMTdIMEMwIDg3LjUgMTAuMTYgMTAzLjQ5IDI1LjEzIDExMS44M0wyNS4xNCAxMTEuODRaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMzAuMzEgMEg2Ny4zQzY5LjE2IDAgNzAuMzggMS45MyA2OS41OSAzLjYxTDYxLjUxIDIwLjc2QzYxLjA5IDIxLjY1IDYwLjIgMjIuMjEgNTkuMjIgMjIuMjFIMzguMzhDMzcuNCAyMi4yMSAzNi41MSAyMS42NCAzNi4wOSAyMC43NkwyOC4wMSAzLjYxQzI3LjIyIDEuOTMgMjguNDQgMCAzMC4zIDBMMzAuMzEgMFoiIGZpbGw9IiNGRkM4OEMiLz4KPHBhdGggZD0iTTM4Ljk4IDguNzM5OTlMNDMuOTEgMjIuMjIiIHN0cm9rZT0iI0RBQTE2RCIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNTguOTc5OSA4LjA0MDA0TDU0LjAzOTkgMjEuNTIiIHN0cm9rZT0iI0RBQTE2RCIgc3Ryb2tlLXdpZHRoPSI1IiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8cGF0aCBkPSJNNjYuMzM5OSAyNi4wNjk5QzY2LjMzOTkgMjUuNjU5OSAzMS4yNjk5IDI1LjY1OTkgMzEuMjY5OSAyNi4wNjk5VjIwLjcxOTlDMzEuMjY5OSAxNC40Mjk5IDY2LjMzOTkgMTQuNDI5OSA2Ni4zMzk5IDIwLjcxOTlWMjYuMDY5OVoiIGZpbGw9IiM3ODQ2MDAiLz4KPHBhdGggZD0iTTAgNjkuMThDMCA0Mi4yMiAyMS44NSAyMC4zNyA0OC44MSAyMC4zN0M3NS43NyAyMC4zNyA5Ny42MiA0Mi4yMiA5Ny42MiA2OS4xOEgwWiIgZmlsbD0iI0ZGQzg4QyIvPgo8cGF0aCBkPSJNODUuMjQgNjkuMTdDODUuMjQgODkuMjkgNjguOTMgMTA1LjYxIDQ4LjggMTA1LjYxQzI4LjY3IDEwNS42MSAxMi4zNiA4OS4zIDEyLjM2IDY5LjE3SDg1LjIzSDg1LjI0WiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTU5LjkyIDYwLjYyQzYwLjIgNjEuNzMgNTkuNjMgNjIuODcgNTguNTggNjMuMzFDNTYuOSA2NCA1NC43Mzk5IDY0LjUxIDUyLjMxOTkgNjQuNTFDNDcuMzk5OSA2NC41MSA0My4xMDk5IDYyLjU0IDQwLjM5OTkgNTkuMDdDMzguODk5OSA1Ny4zMyAzNy44Nzk5IDU1LjEgMzcuNDI5OSA1Mi41N0gzNS42ODk5QzM0Ljg2OTkgNTIuNTcgMzQuMiA1MS45IDM0LjIgNTEuMDhDMzQuMiA1MC4yNiAzNC44Njk5IDQ5LjU5IDM1LjY4OTkgNDkuNTlIMzcuMDA5OUMzNy4wMDk5IDQ5LjU5IDM3LjAyOTkgNDkuNTcgMzcuMDM5OSA0OS41NkMzNi45Njk5IDQ4Ljc0IDM3LjAzOTkgNDcuOSAzNy4wOTk5IDQ3LjFIMzUuNjg5OUMzNC44Njk5IDQ3LjEgMzQuMiA0Ni40MyAzNC4yIDQ1LjYxQzM0LjIgNDQuNzkgMzQuODY5OSA0NC4xMiAzNS42ODk5IDQ0LjEySDM3LjU5OTlDMzguMjE5OSA0MS4zOSAzOS41Mjk5IDM4Ljk3IDQxLjM2OTkgMzcuMDlDNDQuMTI5OSAzNC4yMSA0Ny45Mjk5IDMyLjQ2IDUyLjQ1OTkgMzIuNDZDNTQuNTQ5OSAzMi40NiA1Ni40Mzk5IDMyLjc5IDU3Ljk4OTkgMzMuMjZDNTkuMTg5OSAzMy42MiA1OS44Nzk5IDM0Ljg3IDU5LjUzOTkgMzYuMDhMNTkuNTE5OSAzNi4xNEM1OS4xNzk5IDM3LjM1IDU3LjkxOTkgMzguMDggNTYuNzA5OSAzNy43M0M1NS41NTk5IDM3LjQgNTQuMjMgMzcuMTcgNTIuODMgMzcuMTdDNTAuMTMgMzcuMTcgNDcuNzU5OSAzOC4xMyA0Ni4wMzk5IDM5Ljk5QzQ0Ljk3OTkgNDEuMDMgNDQuMjcgNDIuNTQgNDMuODYgNDQuMTFINTYuNDdDNTcuMjkgNDQuMTEgNTcuOTU5OSA0NC43OCA1Ny45NTk5IDQ1LjZDNTcuOTU5OSA0Ni40MiA1Ny4yOSA0Ny4wOSA1Ni40NyA0Ny4wOUg0My4xN0M0My4xIDQ3LjYzIDQzLjA4IDQ4LjIxIDQzLjA4IDQ4Ljc4VjQ5LjU5SDU2LjQ3QzU3LjI5IDQ5LjU5IDU3Ljk1OTkgNTAuMjYgNTcuOTU5OSA1MS4wOEM1Ny45NTk5IDUxLjkgNTcuMjkgNTIuNTcgNTYuNDcgNTIuNTdINDMuNzA5OUM0NC4wNzk5IDU0LjM4IDQ0Ljg0OTkgNTUuODUgNDUuODk5OSA1Ni45QzQ3LjY5OTkgNTguNzMgNTAuMjIgNTkuNjIgNTMuMDMgNTkuNjJDNTQuNDkgNTkuNjIgNTUuODggNTkuMzUgNTcuMDMgNTguOTlDNTguMjggNTguNjEgNTkuNTg5OSA1OS4zNSA1OS45MDk5IDYwLjYxTDU5LjkyIDYwLjYyWiIgZmlsbD0iIzc4NDYwMCIvPgo8cGF0aCBkPSJNMTU2LjU3IDQ4LjI5QzE1Mi43MiA0Ni4xIDE0OC4zOSA0NSAxNDMuNiA0NUMxMzguODEgNDUgMTM0LjU2IDQ2LjEgMTMwLjcxIDQ4LjI5QzEyNi44NiA1MC40OCAxMjMuNzggNTMuNDggMTIxLjQ3IDU3LjI3QzExOS4xNiA2MS4wNiAxMTggNjUuMzkgMTE4IDcwLjI0QzExOCA3NS4wOSAxMTkuMTYgNzkuNDIgMTIxLjQ3IDgzLjIxQzEyMy43OCA4NyAxMjYuODggODkuOTkgMTMwLjc2IDkyLjE5QzEzNC42NCA5NC4zOCAxMzguOTIgOTUuNDggMTQzLjYgOTUuNDhDMTQ4LjI4IDk1LjQ4IDE1Mi42MyA5NC4zOCAxNTYuNDkgOTIuMTlDMTYwLjM0IDkwIDE2My40MiA4Ny4wMSAxNjUuNzMgODMuMjFDMTY4LjA0IDc5LjQyIDE2OS4yIDc1LjA5IDE2OS4yIDcwLjI0QzE2OS4yIDY1LjM5IDE2OC4wNiA2MC45OCAxNjUuNzggNTcuMjJDMTYzLjUgNTMuNDYgMTYwLjQzIDUwLjQ4IDE1Ni41OCA0OC4yOUgxNTYuNTdaTTE1NS4yOCA3Ny43NUMxNTQuMTIgNzkuOTcgMTUyLjU1IDgxLjcgMTUwLjU3IDgyLjk1QzE0OC41OCA4NC4xOSAxNDYuMjYgODQuODIgMTQzLjU5IDg0LjgyQzE0MC45MiA4NC44MiAxMzguNjcgODQuMiAxMzYuNjYgODIuOTVDMTM0LjY0IDgxLjcxIDEzMy4wNiA3OS45NyAxMzEuOTEgNzcuNzVDMTMwLjc1IDc1LjUzIDEzMC4xOCA3My4wMyAxMzAuMTggNzAuMjRDMTMwLjE4IDY3LjQ1IDEzMC43NiA2NC45NyAxMzEuOTEgNjIuNzdDMTMzLjA3IDYwLjU4IDEzNC42NSA1OC44NiAxMzYuNjYgNTcuNjJDMTM4LjY3IDU2LjM4IDE0MC45OCA1NS43NSAxNDMuNTkgNTUuNzVDMTQ2LjIgNTUuNzUgMTQ4LjU4IDU2LjM3IDE1MC41NyA1Ny42MkMxNTIuNTUgNTguODYgMTU0LjEyIDYwLjU4IDE1NS4yOCA2Mi43N0MxNTYuNDQgNjQuOTYgMTU3LjAxIDY3LjQ1IDE1Ny4wMSA3MC4yNEMxNTcuMDEgNzMuMDMgMTU2LjQzIDc1LjUzIDE1NS4yOCA3Ny43NVoiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0yMTMuMzkgNDguMzhDMjA5LjcyIDQ2LjEzIDIwNS42IDQ1IDIwMS4wNCA0NUMxOTcuMzEgNDUgMTk0LjAyIDQ1LjczIDE5MS4xOCA0Ny4xOEMxODguOSA0OC4zNCAxODcuMDEgNDkuODggMTg1LjQ5IDUxLjc5VjQ2LjA3SDE3NC40N1YxMTIuMTlIMTg2LjJWODkuNzdDMTg3LjYzIDkxLjI5IDE4OS4zMyA5Mi41MSAxOTEuMzEgOTMuNDRDMTk0LjI0IDk0LjggMTk3LjQ2IDk1LjQ4IDIwMC45NSA5NS40OEMyMDUuNjMgOTUuNDggMjA5LjgxIDk0LjM3IDIxMy40OCA5Mi4xNUMyMTcuMTUgODkuOTMgMjIwLjA2IDg2Ljg5IDIyMi4xOSA4My4wNEMyMjQuMzIgNzkuMTkgMjI1LjM5IDc0LjkyIDIyNS4zOSA3MC4yNEMyMjUuMzkgNjUuNTYgMjI0LjMxIDYxLjIzIDIyMi4xNSA1Ny40NEMyMTkuOTkgNTMuNjUgMjE3LjA3IDUwLjYzIDIxMy40IDQ4LjM4SDIxMy4zOVpNMjExLjUyIDc3LjhDMjEwLjMzIDc5Ljk5IDIwOC43MiA4MS43MSAyMDYuNjggODIuOTVDMjA0LjY0IDg0LjE5IDIwMi4yOCA4NC44MiAxOTkuNjEgODQuODJDMTk2Ljk0IDg0LjgyIDE5NC43NyA4NC4yIDE5Mi43MiA4Mi45NUMxOTAuNjggODEuNzEgMTg5LjA4IDc5Ljk5IDE4Ny45MiA3Ny44QzE4Ni43NiA3NS42MSAxODYuMTkgNzMuMDkgMTg2LjE5IDcwLjI1QzE4Ni4xOSA2Ny40MSAxODYuNzcgNjQuOTggMTg3LjkyIDYyLjc4QzE4OS4wOCA2MC41OSAxOTAuNjcgNTguODcgMTkyLjcyIDU3LjYzQzE5NC43NiA1Ni4zOSAxOTcuMDYgNTUuNzYgMTk5LjYxIDU1Ljc2QzIwMi4xNiA1NS43NiAyMDQuNjMgNTYuMzggMjA2LjY4IDU3LjYzQzIwOC43MiA1OC44NyAyMTAuMzQgNjAuNTkgMjExLjUyIDYyLjc4QzIxMi43IDY0Ljk3IDIxMy4zIDY3LjQ2IDIxMy4zIDcwLjI1QzIxMy4zIDczLjA0IDIxMi43MSA3NS42MSAyMTEuNTIgNzcuOFoiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik0yNjYuOTggNTIuMDJDMjY0Ljk3IDQ5LjgzIDI2Mi41MiA0OC4xMSAyNTkuNjUgNDYuODdDMjU2Ljc4IDQ1LjYzIDI1My40NCA0NSAyNDkuNjUgNDVDMjQ1LjA5IDQ1IDI0MSA0Ni4xIDIzNy4zOSA0OC4yOUMyMzMuNzggNTAuNDggMjMwLjkgNTMuNDYgMjI4Ljc3IDU3LjIyQzIyNi42NCA2MC45OCAyMjUuNTcgNjUuMjkgMjI1LjU3IDcwLjE1QzIyNS41NyA3NS4wMSAyMjYuNjEgNzkuMSAyMjguNjggODIuOTVDMjMwLjc1IDg2LjggMjMzLjY3IDg5Ljg1IDIzNy40MyA5Mi4xQzI0MS4xOSA5NC4zNSAyNDUuNTYgOTUuNDggMjUwLjU0IDk1LjQ4QzI1My44IDk1LjQ4IDI1Ni44MiA5NC45OCAyNTkuNiA5My45N0MyNjIuMzggOTIuOTYgMjY0Ljc4IDkxLjU3IDI2Ni44IDg5Ljc5QzI2OC44MSA4OC4wMSAyNzAuMyA4NS45NyAyNzEuMjQgODMuNjZMMjYxLjgyIDc5LjA0QzI2MC43NSA4MC45NCAyNTkuMjkgODIuNDUgMjU3LjQyIDgzLjU3QzI1NS41NSA4NC43IDI1My4yOSA4NS4yNiAyNTAuNjIgODUuMjZDMjQ3Ljk1IDg1LjI2IDI0NS42IDg0LjY0IDI0My41NSA4My4zOUMyNDEuNTEgODIuMTUgMjM5Ljk2IDgwLjM4IDIzOC45MyA3OC4xQzIzOC4zMSA3Ni43MyAyMzcuOTIgNzUuMjMgMjM3Ljc1IDczLjYxSDI3Mi41NkMyNzIuOCA3Mi45IDI3Mi45NiA3Mi4xMSAyNzMuMDUgNzEuMjZDMjczLjE0IDcwLjQgMjczLjE4IDY5LjUzIDI3My4xOCA2OC42NEMyNzMuMTggNjUuMzggMjcyLjY1IDYyLjM1IDI3MS41OCA1OS41M0MyNzAuNTEgNTYuNzIgMjY4Ljk3IDU0LjIxIDI2Ni45NiA1Mi4wMkgyNjYuOThaTTIzOCA2NC42NEMyMzguMiA2My42MiAyMzguNDggNjIuNjcgMjM4Ljg1IDYxLjhDMjM5LjgzIDU5LjQ5IDI0MS4yNiA1Ny43MSAyNDMuMTYgNTYuNDdDMjQ1LjA2IDU1LjIzIDI0Ny4yMiA1NC42IDI0OS42NSA1NC42QzI1Mi4wOCA1NC42IDI1NC4zNyA1NS4yMiAyNTYuMTggNTYuNDdDMjU3Ljk5IDU3LjcxIDI1OS4yOSA1OS40IDI2MC4wOSA2MS41NEMyNjAuNDYgNjIuNTEgMjYwLjY3IDYzLjU1IDI2MC43NCA2NC42NUgyMzhWNjQuNjRaIiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMzExLjggNDcuMzFDMzA5LjA0IDQ1Ljc3IDMwNS44OSA0NSAzMDIuMzQgNDVDMjk4Ljc5IDQ1IDI5NS45IDQ1Ljc2IDI5My4zMiA0Ny4yN0MyOTEuMzMgNDguNDQgMjg5Ljc4IDUwLjAyIDI4OC42NSA1Mi4wMlY0Ni4wN0gyNzcuNjNWOTQuNDJIMjg5LjM2VjY2LjA3QzI4OS4zNiA2My45NCAyODkuNzcgNjIuMSAyOTAuNiA2MC41NkMyOTEuNDMgNTkuMDIgMjkyLjU4IDU3Ljg0IDI5NC4wNyA1Ny4wMUMyOTUuNTUgNTYuMTggMjk3LjI0IDU1Ljc3IDI5OS4xNCA1NS43N0MzMDEuMDQgNTUuNzcgMzAyLjcyIDU2LjE5IDMwNC4yMSA1Ny4wMUMzMDUuNjkgNTcuODQgMzA2Ljg1IDU5LjAyIDMwNy42OCA2MC41NkMzMDguNTEgNjIuMSAzMDguOTIgNjMuOTQgMzA4LjkyIDY2LjA3Vjk0LjQySDMyMC41NlY2My4zMkMzMjAuNTYgNTkuNzEgMzE5Ljc5IDU2LjUyIDMxOC4yNSA1My43N0MzMTYuNzEgNTEuMDIgMzE0LjU2IDQ4Ljg3IDMxMS44MSA0Ny4zM1Y0Ny4zMUgzMTEuOFoiIGZpbGw9ImJsYWNrIi8+CjxwYXRoIGQ9Ik02MDkuMDYgOS4yNzI3NkwzNDQuODg5IDMyLjM4NDdDMzM2LjA5NyAzMy4xNTM5IDMyOS41OTQgNDAuOTA0NyAzMzAuMzYzIDQ5LjY5NjdMMzM1LjMzNiAxMDYuNTRDMzM2LjEwNSAxMTUuMzMxIDM0My44NTYgMTIxLjgzNSAzNTIuNjQ4IDEyMS4wNjZMNjE2LjgxOSA5Ny45NTRDNjI1LjYxMSA5Ny4xODQ4IDYzMi4xMTQgODkuNDM0IDYzMS4zNDUgODAuNjQyMUw2MjYuMzcyIDIzLjc5OTJDNjI1LjYwMyAxNS4wMDczIDYxNy44NTIgOC41MDM1NiA2MDkuMDYgOS4yNzI3NloiIGZpbGw9IiMwMEEwNUEiLz4KPHBhdGggZD0iTTM1Mi4zMyAxMDQuNzEzTDM0Ny40NCA0OC43OTI5TDM2OC45IDQ2LjkxMjlDMzcyLjc1IDQ2LjU3MjkgMzc2LjIzIDQ2Ljk1MjkgMzc5LjMyIDQ4LjA0MjlDMzgyLjQxIDQ5LjEzMjkgMzg0LjkzIDUwLjkzMjkgMzg2Ljg2IDUzLjQzMjlDMzg4Ljc5IDU1LjkzMjkgMzg5LjkzIDU5LjE0MjkgMzkwLjI3IDYzLjA0MjlDMzkwLjYgNjYuODQyOSAzOTAuMDIgNzAuMTQyOSAzODguNTMgNzIuOTUyOUMzODcuMDQgNzUuNzUyOSAzODQuODYgNzcuOTcyOSAzODIgNzkuNjEyOUMzNzkuMTQgODEuMjUyOSAzNzUuODEgODIuMjMyOSAzNzIuMDEgODIuNTYyOUwzNjIuMTggODMuNDIyOUwzNjMuOTUgMTAzLjY4M0wzNTIuMzIgMTA0LjcwM0wzNTIuMzMgMTA0LjcxM1pNMzYxLjMxIDczLjI5MjlMMzcxLjIyIDcyLjQyMjlDMzcyLjg3IDcyLjI4MjkgMzc0LjI3IDcxLjgzMjkgMzc1LjQxIDcxLjA3MjlDMzc2LjU1IDcwLjMyMjkgMzc3LjQxIDY5LjMzMjkgMzc3Ljk5IDY4LjEyMjlDMzc4LjU3IDY2LjkxMjkgMzc4Ljc5IDY1LjU1MjkgMzc4LjY2IDY0LjA1MjlDMzc4LjUyIDYyLjUwMjkgMzc4LjA3IDYxLjE4MjkgMzc3LjI5IDYwLjA5MjlDMzc2LjUxIDU5LjAwMjkgMzc1LjUgNTguMTgyOSAzNzQuMjQgNTcuNjMyOUMzNzIuOTggNTcuMDkyOSAzNzEuNTMgNTYuODgyOSAzNjkuODggNTcuMDMyOUwzNTkuOTcgNTcuOTAyOUwzNjEuMzIgNzMuMjkyOUgzNjEuMzFaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNDE5LjE2IDc4LjQ0MjlMNDEwLjkgNzkuMTYyOUw0MTIuNjcgOTkuNDIyOUw0MDEuMDQgMTAwLjQ0M0wzOTYuMTUgNDQuNTIyOUw0MTcuNTQgNDIuNjUyOUM0MjEuMzkgNDIuMzEyOSA0MjQuODcgNDIuNjkyOSA0MjcuOTYgNDMuNzgyOUM0MzEuMDUgNDQuODcyOSA0MzMuNTcgNDYuNjcyOSA0MzUuNSA0OS4xNzI5QzQzNy40MyA1MS42NzI5IDQzOC41NyA1NC44ODI5IDQzOC45MSA1OC43ODI5QzQzOS4yNCA2Mi41ODI5IDQzOC42NSA2NS45MDI5IDQzNy4xMyA2OC43MzI5QzQzNS42MSA3MS41NjI5IDQzMy40NCA3My43ODI5IDQzMC42IDc1LjM5MjlMNDQ1LjMxIDk2LjU2MjlMNDMyLjI1IDk3LjcwMjlMNDE5LjE0IDc4LjQzMjlMNDE5LjE2IDc4LjQ0MjlaTTQxMC4wMiA2OS4wMzI5TDQxOS44NSA2OC4xNzI5QzQyMS41IDY4LjAzMjkgNDIyLjkgNjcuNTgyOSA0MjQuMDQgNjYuODIyOUM0MjUuMTggNjYuMDcyOSA0MjYuMDQgNjUuMDgyOSA0MjYuNjIgNjMuODcyOUM0MjcuMiA2Mi42NjI5IDQyNy40MiA2MS4zMDI5IDQyNy4yOSA1OS44MDI5QzQyNy4xNSA1OC4yNTI5IDQyNi43IDU2LjkzMjkgNDI1LjkyIDU1Ljg0MjlDNDI1LjE0IDU0Ljc1MjkgNDI0LjEzIDUzLjkzMjkgNDIyLjg3IDUzLjM4MjlDNDIxLjYxIDUyLjg0MjkgNDIwLjE2IDUyLjYzMjkgNDE4LjUxIDUyLjc4MjlMNDA4LjY4IDUzLjY0MjlMNDEwLjAzIDY5LjAzMjlINDEwLjAyWiIgZmlsbD0id2hpdGUiLz4KPHBhdGggZD0iTTQ1MS4xIDk2LjA3MjlMNDQ2LjIxIDQwLjE2MjlMNDU3Ljg0IDM5LjE0MjlMNDYyLjczIDk1LjA2M0w0NTEuMSA5Ni4wODI5Vjk2LjA3MjlaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNDk5LjI5IDkyLjc2MjlDNDk1LjI5IDkzLjExMjkgNDkxLjUxIDkyLjcxMjkgNDg3Ljk1IDkxLjU2MjlDNDg0LjM5IDkwLjQxMjkgNDgxLjIzIDg4LjY0MjkgNDc4LjQ1IDg2LjI3MjlDNDc1LjY3IDgzLjkwMjkgNDczLjQxIDgxLjAxMjkgNDcxLjY4IDc3LjYzMjlDNDY5Ljk1IDc0LjI1MjkgNDY4LjkgNzAuNDkyOSA0NjguNTQgNjYuMzQyOUM0NjguMTggNjIuMTkyOSA0NjguNTQgNTguMjkyOSA0NjkuNjMgNTQuNjMyOUM0NzAuNzIgNTAuOTgyOSA0NzIuNDMgNDcuNzYyOSA0NzQuNzYgNDQuOTUyOUM0NzcuMDkgNDIuMTUyOSA0NzkuOSAzOS44OTI5IDQ4My4yIDM4LjE2MjlDNDg2LjUgMzYuNDMyOSA0OTAuMTggMzUuMzkyOSA0OTQuMjMgMzUuMDQyOUM0OTguMjggMzQuNjgyOSA1MDEuOTggMzUuMDQyOSA1MDUuMzMgMzYuMTEyOUM1MDguNjggMzcuMTgyOSA1MTEuNTcgMzguNzQyOSA1MTQuMDIgNDAuNzkyOUM1MTYuNDcgNDIuODQyOSA1MTguMjkgNDUuMjEyOSA1MTkuNDggNDcuODgyOUw1MDkuNjMgNTMuNzMyOUM1MDguNDQgNTEuMTEyOSA1MDYuNTggNDkuMDIyOSA1MDQuMDUgNDcuNDUyOUM1MDEuNTIgNDUuODgyOSA0OTguNTUgNDUuMjUyOSA0OTUuMTUgNDUuNTUyOUM0OTEuODUgNDUuODQyOSA0ODkuMDEgNDYuODcyOSA0ODYuNjUgNDguNjQyOUM0ODQuMjggNTAuNDEyOSA0ODIuNTMgNTIuNzIyOSA0ODEuMzkgNTUuNTcyOUM0ODAuMjUgNTguNDIyOSA0NzkuODQgNjEuNjcyOSA0ODAuMTYgNjUuMzIyOUM0ODAuNDggNjguOTcyOSA0ODEuNDUgNzIuMTEyOSA0ODMuMDYgNzQuNzUyOUM0ODQuNjggNzcuMzgyOSA0ODYuOCA3OS4zNjI5IDQ4OS40NCA4MC42OTI5QzQ5Mi4wOCA4Mi4wMjI5IDQ5NS4wNSA4Mi41NDI5IDQ5OC4zNSA4Mi4yNjI5QzUwMS43NSA4MS45NjI5IDUwNC41NiA4MC44MjI5IDUwNi43OSA3OC44NDI5QzUwOS4wMSA3Ni44NjI5IDUxMC40OCA3NC40NzI5IDUxMS4xOSA3MS42OTI5TDUyMS45MSA3NS43NDI5QzUyMS4yIDc4LjU3MjkgNTE5LjgyIDgxLjIyMjkgNTE3Ljc2IDgzLjY2MjlDNTE1LjcxIDg2LjExMjkgNTEzLjEyIDg4LjE1MjkgNTEwLjAxIDg5Ljc4MjlDNTA2LjkgOTEuNDEyOSA1MDMuMzIgOTIuNDEyOSA0OTkuMjcgOTIuNzYyOUg0OTkuMjlaIiBmaWxsPSJ3aGl0ZSIvPgo8cGF0aCBkPSJNNTMwLjU4IDg5LjExMjlMNTI1LjY5IDMzLjE5MjlMNTYzLjI5IDI5LjkwM0w1NjQuMTggNDAuMDMyOUw1MzguMjEgNDIuMzAyOUw1MzkuMzIgNTQuOTgzTDU2My43OSA1Mi44NDNMNTY0LjY4IDYyLjk3M0w1NDAuMjEgNjUuMTEyOUw1NDEuMzMgNzcuOTQzTDU2Ny4zIDc1LjY3MjlMNTY4LjE5IDg1LjgwMjlMNTMwLjU5IDg5LjA5M0w1MzAuNTggODkuMTEyOVoiIGZpbGw9IndoaXRlIi8+CjxwYXRoIGQ9Ik01OTUuMjEgODQuMzcyOUM1OTEuNzEgODQuNjgyOSA1ODguMzYgODQuMzMyOSA1ODUuMTcgODMuMzIyOUM1ODEuOTggODIuMzEyOSA1NzkuMTcgODAuNzMyOSA1NzYuNzQgNzguNTcyOUM1NzQuMzEgNzYuNDEyOSA1NzIuNCA3My43ODI5IDU3MS4wMiA3MC42ODI5TDU4MC4xOCA2NS41NzI5QzU4MS44NSA2OC41MDI5IDU4NCA3MC43MzI5IDU4Ni42MyA3Mi4yNzI5QzU4OS4yNiA3My44MTI5IDU5Mi4wOCA3NC40NDI5IDU5NS4wOCA3NC4xODI5QzU5Ni42OCA3NC4wNDI5IDU5OC4wNCA3My42NzI5IDU5OS4xNCA3My4wNzI5QzYwMC4yNSA3Mi40NzI5IDYwMS4wOSA3MS43MDI5IDYwMS42NiA3MC43NzI5QzYwMi4yMyA2OS44NDI5IDYwMi40NyA2OC43NzI5IDYwMi4zNiA2Ny41NzI5QzYwMi4yNSA2Ni4yNzI5IDYwMS43NSA2NS4xOTI5IDYwMC44NyA2NC4zNDI5QzU5OS45OSA2My40ODI5IDU5OC42NyA2Mi44NjI5IDU5Ni45MiA2Mi40NTI5TDU4NS42NSA1OS44MTI5QzU4MS4wNyA1OC43NTI5IDU3Ny41NCA1Ni45ODI5IDU3NS4wNSA1NC41MDI5QzU3Mi41NiA1Mi4wMjI5IDU3MS4xNiA0OC45MDI5IDU3MC44MyA0NS4xNTI5QzU3MC41NCA0MS44NTI5IDU3MS4xIDM4Ljg3MjkgNTcyLjUxIDM2LjIzMjlDNTczLjkyIDMzLjU5MjkgNTc2LjAyIDMxLjQ0MjkgNTc4LjgzIDI5Ljc4MjlDNTgxLjYzIDI4LjEyMjkgNTg0Ljk0IDI3LjEzMjkgNTg4Ljc0IDI2Ljc5MjlDNTkyLjA5IDI2LjUwMjkgNTk1LjI1IDI2LjgwMjkgNTk4LjIgMjcuNzAyOUM2MDEuMTUgMjguNjAyOSA2MDMuNzYgMzAuMDEyOSA2MDYuMDIgMzEuOTMyOUM2MDguMjggMzMuODUyOSA2MTAuMDYgMzYuMjQyOSA2MTEuMzcgMzkuMTAyOUw2MDIuMjkgNDQuMjAyOUM2MDEuMDEgNDEuNjkyOSA1OTkuMjYgMzkuNzkyOSA1OTcuMDMgMzguNTAyOUM1OTQuOCAzNy4yMTI5IDU5Mi4zMyAzNi42ODI5IDU4OS42MyAzNi45MjI5QzU4OC4wOCAzNy4wNjI5IDU4Ni43MiAzNy40MzI5IDU4NS41NyAzOC4wMzI5QzU4NC40MSAzOC42NDI5IDU4My41NSAzOS40MzI5IDU4Mi45OCA0MC40MTI5QzU4Mi40MSA0MS4zOTI5IDU4Mi4xOCA0Mi40ODI5IDU4Mi4yOCA0My42OTI5QzU4Mi4zOSA0NC45OTI5IDU4Mi45MiA0Ni4wOTI5IDU4My44NSA0Ni45OTI5QzU4NC43OSA0Ny44OTI5IDU4Ni4xMyA0OC41NDI5IDU4Ny44OCA0OC45NDI5TDU5OC45MiA1MS40NTI5QzYwMy41NSA1Mi41MTI5IDYwNy4wOSA1NC4yNDI5IDYwOS41NSA1Ni42NTI5QzYxMiA1OS4wNjI5IDYxMy40IDYyLjE0MjkgNjEzLjcyIDY1Ljg5MjlDNjE0LjAxIDY5LjE0MjkgNjEzLjQxIDcyLjExMjkgNjExLjkzIDc0Ljc4MjlDNjEwLjQ1IDc3LjQ2MjkgNjA4LjI4IDc5LjY0MjkgNjA1LjQzIDgxLjMyMjlDNjAyLjU4IDgzLjAxMjkgNTk5LjE3IDg0LjAyMjkgNTk1LjIyIDg0LjM3MjlINTk1LjIxWiIgZmlsbD0id2hpdGUiLz4KPC9zdmc+Cg==">
+            </div>
+            <h2>Open Prices: the <span class="tag p">scanTober</span> challenge</h2>
+            <p class="sub">Same calendar, another playground: recording prices in stores.</p>
+            <div class="pgrid">
+                <div style="--r:-3deg"><b>581</b>photos</div>
+                <div style="--r:2deg"><b>976</b>prices</div>
+                <div style="--r:-2deg"><b>47</b>contributors</div>
+                <div style="--r:3deg"><b>105</b>locations</div>
+                <div style="--r:-1deg"><b>764</b>products involved</div>
+            </div>
+            <div class="podium">
+                <span>Podium:</span>
+                <span class="tag">sebleouf</span>
+                <span class="tag p">freso</span>
+                <span class="tag t">poslovitch</span>
+            </div>
+            <p class="sub" style="margin-top: 15px; font-weight: bold;">Check more stats on the <a href="https://prices.openfoodfacts.org/challenges/17" target="_blank" rel="noopener">challenge page</a>.</p>
+        </div>
+    </section>
+    <div class="wrap">
+        <footer>Data: Open Food Facts and Open Prices, Scantober 2026.</footer>
+    </div>
+    <script>
+        const D = { "cats": [["camomile-teas", "2026-10-01"], ["breads-with-seeds", "2026-10-02"], ["plain-cow-milk-yogurts", "2026-10-03"], ["squid", "2026-10-04"], ["stews", "2026-10-05"], ["orange-juices", "2026-10-06"], ["margarines", "2026-10-07"], ["bacon", "2026-10-08"], ["light-beers", "2026-10-09"], ["vegetable-salads", "2026-10-10"], ["jams", "2026-10-11"], ["bean-dishes", "2026-10-12"], ["chicken-and-vegetables-soup", "2026-10-13"], ["frying-oil", "2026-10-14"], ["pickled-fruits", "2026-10-15"], ["lemon-juice", "2026-10-16"], ["meat-balls", "2026-10-17"], ["canned-diced-mixed-vegetables", "2026-10-18"], ["hamburger-buns", "2026-10-19"], ["tomato-juices", "2026-10-20"], ["mint-teas", "2026-10-21"], ["liqueurs", "2026-10-22"], ["whole-wheat-english-muffins", "2026-10-23"], ["mix-of-salad-leaves", "2026-10-24"], ["egg-sandwiches", "2026-10-25"], ["stuffed-olives", "2026-10-26"], ["offals-soup", "2026-10-27"], ["fermented-teas", "2026-10-28"], ["vegetable-bouillon-powders", "2026-10-29"], ["marinated-fish", "2026-10-30"], ["pizzas", "2026-10-31"]], "edits": [["5712872282587", "camomile-teas", "2026-10-01", "freso"], ["8410234621148", "squid", "2026-10-04", "sebleouf"], ["8410234601140", "squid", "2026-10-04", "sebleouf"], ["20030841", "stews", "2026-10-05", "prepperapp"], ["3258561300252", "orange-juices", "2026-10-06", "foodless"], ["3502110009449", "orange-juices", "2026-10-06", "aleene"], ["3564700494493", "orange-juices", "2026-10-06", "aleene"], ["6130720001293", "orange-juices", "2026-10-06", "fatou13"], ["3366321053864", "margarines", "2026-10-07", "org-saint-hubert"], ["3366321053871", "margarines", "2026-10-07", "org-saint-hubert"], ["5701977062316", "margarines", "2026-10-07", "blakezilla06"], ["3366321052393", "margarines", "2026-10-07", "org-saint-hubert"], ["5055940101206", "margarines", "2026-10-07", "smoothie-app"], ["8719200203440", "margarines", "2026-10-07", "floreg"], ["8719200230989", "margarines", "2026-10-07", "foodless"], ["5410093903648", "margarines", "2026-10-07", "thaialagata"], ["8719200252547", "margarines", "2026-10-07", "ymirfriz"], ["8719200264595", "margarines", "2026-10-07", "foodless"], ["8719200274334", "margarines", "2026-10-07", "foodless"], ["8718452697045", "margarines", "2026-10-07", "bodysupport"], ["8719200276222", "margarines", "2026-10-07", "floreg"], ["4068261085361", "margarines", "2026-10-07", "ymirfriz"], ["3596710430130", "bacon", "2026-10-08", "org-auchan-apaw"], ["3174061036159", "jams", "2026-10-11", "smoothie-app"], ["3330725503515", "jams", "2026-10-11", "smoothie-app"], ["5607238032169", "jams", "2026-10-11", "camaradeultime"], ["8054309190018", "jams", "2026-10-11", "saturnum"], ["4026701003337", "jams", "2026-10-11", "prepperapp"], ["3700422202361", "jams", "2026-10-11", "jacamaal"], ["3299431313019", "jams", "2026-10-11", "kiliweb"], ["3299431313064", "jams", "2026-10-11", "kiliweb"], ["3760211822125", "jams", "2026-10-11", "smoothie-app"], ["8906029450548", "jams", "2026-10-11", "pasalajayanth10"], ["3760121219855", "jams", "2026-10-11", "nidou"], ["4280001326163", "jams", "2026-10-11", "mikasturm"], ["8901030922770", "jams", "2026-10-11", "pasalajayanth10"], ["3469672100048", "jams", "2026-10-11", "camaradeultime"], ["3469672100055", "jams", "2026-10-11", "smoothie-app"], ["4779049620406", "jams", "2026-10-11", "ananasessen"], ["6111184009940", "jams", "2026-10-11", "smoothie-app"], ["8718452811878", "jams", "2026-10-11", "bodysupport"], ["7070841007295", "jams", "2026-10-11", "odinh"], ["4068262109707", "jams", "2026-10-11", "moon-rabbit"], ["4068262109691", "jams", "2026-10-11", "moon-rabbit"], ["7070841007301", "jams", "2026-10-11", "odinh"], ["7070841007318", "jams", "2026-10-11", "odinh"], ["8000633052966", "jams", "2026-10-11", "teolemon"], ["3596710530915", "bean-dishes", "2026-10-12", "smoothie-app"], ["4901117522064", "lemon-juice", "2026-10-16", "qualityofvoid7"], ["4037300104189", "meat-balls", "2026-10-17", "prepperapp"], ["8003490036308", "hamburger-buns", "2026-10-19", "gmlaa"], ["3029330069355", "hamburger-buns", "2026-10-19", "foodless"], ["8908014814076", "hamburger-buns", "2026-10-19", "pasalajayanth10"], ["5400141477740", "hamburger-buns", "2026-10-19", "foodless"], ["4061461863821", "hamburger-buns", "2026-10-19", "prepperapp"], ["4335619322721", "hamburger-buns", "2026-10-19", "kiliweb"], ["20033378", "stuffed-olives", "2026-10-26", "thaialagata"], ["8480000330475", "stuffed-olives", "2026-10-26", "thaialagata"], ["8480000332059", "stuffed-olives", "2026-10-26", "thaialagata"], ["0055823303005", "stuffed-olives", "2026-10-26", "smoothie-app"], ["8480000229106", "stuffed-olives", "2026-10-26", "thaialagata"], ["8480000677174", "stuffed-olives", "2026-10-26", "thaialagata"], ["8480000603203", "stuffed-olives", "2026-10-26", "thaialagata"], ["3474607521102", "marinated-fish", "2026-10-30", "monsieurtanuki"], ["00053587", "pizzas", "2026-10-31", "macrofactor"], ["00185394", "pizzas", "2026-10-31", "macrofactor"], ["0072180634733", "pizzas", "2026-10-31", "macrofactor"], ["4001724022398", "pizzas", "2026-10-31", "freso"], ["4001724022442", "pizzas", "2026-10-31", "freso"], ["4009233003655", "pizzas", "2026-10-31", "prepperapp"], ["4260414150470", "pizzas", "2026-10-31", "micha-kch"], ["00255790", "pizzas", "2026-10-31", "roboto-app"], ["00869195", "pizzas", "2026-10-31", "macrofactor"], ["4001724039297", "pizzas", "2026-10-31", "freso"], ["0013800929365", "pizzas", "2026-10-31", "macrofactor"], ["8712247231544", "pizzas", "2026-10-31", "macrofactor"], ["7350126086697", "pizzas", "2026-10-31", "freso"], ["4260414153068", "pizzas", "2026-10-31", "macrofactor"], ["4056489824206", "pizzas", "2026-10-31", "foodless"], ["7350076361998", "pizzas", "2026-10-31", "freso"], ["4001724047292", "pizzas", "2026-10-31", "freso"], ["7311043010462", "pizzas", "2026-10-31", "freso"], ["7310240071665", "pizzas", "2026-10-31", "freso"], ["8015673033585", "pizzas", "2026-10-31", "kiliweb"], ["3760325841272", "pizzas", "2026-10-31", "kiliweb"], ["0080868002644", "pizzas", "2026-10-31", "macrofactor"], ["7316110001640", "pizzas", "2026-10-31", "freso"], ["7316110001619", "pizzas", "2026-10-31", "freso"], ["6431903740689", "pizzas", "2026-10-31", "freso"], ["7340191181830", "pizzas", "2026-10-31", "s64425"], ["7311043025848", "pizzas", "2026-10-31", "freso"], ["0990312175735", "pizzas", "2026-10-31", "emm"], ["7311043025855", "pizzas", "2026-10-31", "freso"], ["7310960055174", "pizzas", "2026-10-31", "freso"], ["7311043006533", "pizzas", "2026-10-31", "freso"], ["8015673035787", "pizzas", "2026-10-31", "smoothie-app"]], "created": [["9323450010018", "stews", "2026-10-05", "openfoodfacts-contributors"], ["5901529126705", "orange-juices", "2026-10-07", "smoothie-app"], ["5203278064162", "orange-juices", "2026-10-10", "userman"], ["5907631202467", "jams", "2026-10-10", "trangoul"], ["8000633052966", "jams", "2026-10-11", "smoothie-app"], ["8594071235048", "bean-dishes", "2026-10-11", "smoothie-app"], ["91210271", "margarines", "2026-10-12", "smoothie-app"], ["29548743", "bacon", "2026-10-12", "macrofactor"], ["8595678430867", "jams", "2026-10-13", "jancz"], ["8436015961326", "jams", "2026-10-13", "smoothie-app"], ["8901689702082", "jams", "2026-10-13", "smoothie-app"], ["3389681003089", "jams", "2026-10-13", "palaeksa"], ["5060183363434", "jams", "2026-10-14", "davidbenes1"], ["8994016001415", "jams", "2026-10-14", "sayaivan"], ["4901117522064", "lemon-juice", "2026-10-16", "qualityofvoid7"], ["49780345", "lemon-juice", "2026-10-17", "qualityofvoid7"], ["3023480113005", "liqueurs", "2026-10-24", "open-prices"], ["7311043006533", "pizzas", "2026-10-31", "freso"], ["8015673035787", "pizzas", "2026-10-31", "smoothie-app"]] };
+        const cols = ['var(--or)', 'var(--tu)', 'var(--pk)', 'var(--bl)'];
+        const pretty = s => { s = s.replace(/-/g, ' '); return s[0].toUpperCase() + s.slice(1) };
+        const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+        const link = c => `<a href="https://world.openfoodfacts.org/product/${encodeURIComponent(c)}" target="_blank" rel="noopener">${esc(c)}</a>`;
+        const dayOf = d => +d.slice(8);
+        const diff = (a, b) => Math.round((new Date(a) - new Date(b)) / 864e5);
+        const dateOf = n => D.cats[n - 1];
+        const eByDay = {}, cByDay = {};
+        D.edits.forEach(e => (eByDay[e[2]] ??= []).push(e));
+        D.created.forEach(c => { const cd = D.cats.find(x => x[0] === c[1]); if (cd) (cByDay[cd[1]] ??= []).push(c) });
+        const max = Math.max(...Object.values(eByDay).map(a => a.length));
+        const cal = document.getElementById('cal');
+        ['M', 'T', 'W', 'T', 'F', 'S', 'S'].forEach(d => cal.insertAdjacentHTML('beforeend', `<div class="dow">${d}</div>`));
+        for (let i = 0; i < 3; i++)cal.insertAdjacentHTML('beforeend', '<div class="day blank"></div>');
+        D.cats.forEach(([cat, date], i) => {
+            const e = (eByDay[date] || []).length, c = (cByDay[date] || []).length, col = cols[i % 4];
+            const b = document.createElement('button'); b.className = 'day'; b.style.setProperty('--c', col);
+            b.style.setProperty('--h', (e / max * 100) + '%'); b.dataset.date = date; b.setAttribute('aria-pressed', 'false');
+            b.setAttribute('aria-label', `${dayOf(date)} October, ${pretty(cat)}, ${e} edits, ${c} creations`);
+            b.innerHTML = `<span class="fill"></span><span class="n">${dayOf(date)}</span><span class="cat">${esc(pretty(cat))}</span><span class="dots">${'<i></i>'.repeat(c)}</span>`;
+            b.onclick = () => show(date); cal.appendChild(b)
+        });
+        function show(date) {
+            document.querySelectorAll('.day').forEach(x => x.setAttribute('aria-pressed', x.dataset.date === date));
+            const [cat] = D.cats.find(x => x[1] === date), ed = eByDay[date] || [], cr = cByDay[date] || [];
+            const off = c => { const d = diff(c[2], date); return d === 0 ? 'on the day' : d > 0 ? `D+${d}` : `D${d}` };
+            document.getElementById('panel').innerHTML = `<h3>October ${dayOf(date)} · ${esc(pretty(cat))}</h3>
+ <div>${ed.length} edit${ed.length > 1 ? 's' : ''} on the day · ${cr.length} creation${cr.length > 1 ? 's' : ''} nearby</div>
+ <div class="cols"><div><b>Edited on the right day</b><ul>${ed.map(e => `<li>${link(e[0])}<span>${esc(e[3])}</span></li>`).join('') || '<li>None in the sample</li>'}</ul></div>
+ <div><b>Created around the day</b><ul>${cr.map(c => `<li>${link(c[0])}<span>${esc(c[3])} <span class="off">${off(c)}</span></span></li>`).join('') || '<li>None in the sample</li>'}</ul></div></div>`
+        }
+        function bars(id, entries, fmt) {
+            const m = Math.max(...entries.map(e => e[1]));
+            document.getElementById(id).innerHTML = entries.map((e, i) => `<div class="row" style="--c:${cols[i % 4]}"><span>${esc(fmt(e[0]))}</span><div><div class="bar" style="--w:${e[1] / m * 100}%"></div></div><b>${e[1]}</b></div>`).join('')
+        }
+        const tally = k => Object.entries(D.edits.reduce((o, e) => (o[e[k]] = (o[e[k]] || 0) + 1, o), {})).sort((a, b) => b[1] - a[1]);
+        bars('top', tally(3).slice(0, 10), x => x);
+        bars('catbars', tally(1).slice(0, 8), pretty);
+        show('2026-10-31');
+    </script>
+</body>
+
+</html>
